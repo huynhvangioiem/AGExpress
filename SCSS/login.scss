@@ -1,0 +1,86 @@
+.container-fluid {
+    background-color: #eeeeee;
+}
+/* Banner*/
+.banner {
+    height: 20vh;
+    min-height: 100px;
+    align-items: center;
+    background-color: #ce1d29;
+    color: #fff;
+    text-align: center;
+    .container {
+        .logo {
+            img {
+                max-width: 15vh;
+                min-width: 95px;
+            }
+        }
+        .header {
+            align-self: center;
+        }
+    }
+}
+/* Login Content */
+.loginContent {
+    height: 60vh;
+    min-height: 275px;
+    max-height: calc(100vh - 175px);
+    padding: 20px 0px;
+    align-items: center;
+    text-align: center;
+    .formLogin {
+        .title {
+            margin-bottom: 20px;
+        }
+        input.form-control {
+            background-color: #fff;
+        }
+    }
+}
+/* Footer*/
+.footer {
+    height: 20vh;
+    min-height: 75px;
+    padding: 10px 0px;
+    background-color: #ce6f1d;
+    color: #fff;
+    align-items: center;
+    text-align: center;
+    .container {
+        > .row {
+            > div {
+                align-self: center;
+            }
+        }
+        a {
+            transition: all linear 0.2s;
+        }
+        a:hover {
+            color: green;
+        }
+    }
+}
+/* Dialog */
+#forgetDialog {
+    .container {
+        width: 500px;
+        text-align: center;
+        .dialogHeader {
+            .messageTitle {
+                margin: 10px auto;
+            }
+        }
+        .dialogContent {
+            p {
+                font-size: 20px;
+            }
+        }
+        .dialogFooter{
+            .btnClose {
+                width: 100px;
+                margin: 15px auto;
+            }
+        }
+    }
+}

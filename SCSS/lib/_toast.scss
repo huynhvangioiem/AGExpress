@@ -1,0 +1,241 @@
+// Toast Messages Style (SCSS)
+// Developed by TLA
+// version: 1.0
+// Date: 05/08/2021
+
+// @import "config";
+
+@mixin toast-icon($color) {
+    #{if(&, '& .toast_icon', '.toast_icon')} {
+        color: $color;
+    }
+}
+/* #toast - container for toast messages items */
+#toast {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 9999;
+    display: flex;
+    width: $widthToastItem;
+    max-width: 90%;
+    flex-direction: column-reverse;
+}
+
+/* Toast Items */
+.toast {
+    display: flex;
+    align-items: center;
+    background-color: $bgColorToastItem;
+    border-radius: 5px;
+    padding: 20px 0;
+    border-left: 6px solid;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+    & + & {
+        margin-bottom: $mbToastItem;
+    }
+    // toast layout
+    &_icon {
+        font-size: 20px;
+        padding: 0 16px;
+    }
+    &_body {
+        flex-grow: 1;
+    }
+    &_title {
+        font-size: 16px;
+        color: #333;
+        font-weight: bold;
+    }
+    &_msg {
+        font-size: 14px;
+        color: #888;
+        margin-top: 6px;
+        line-height: 1.5;
+    }
+    &_close {
+        font-size: 20px;
+        color: rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        padding: 0 16px;
+    }
+    // toast color
+    &-primary {
+        border-color: $primaryColor;
+        @include toast-icon($primaryColor);
+        &-colored {
+            @include toast-icon(#fff);
+            background-color: $primaryColor;
+            border: none;
+            .toast_title,
+            .toast_msg {
+                color: #fff;
+            }
+        }
+        &-outline {
+            @include toast-icon($primaryColor);
+            border-right: 2px solid;
+            border-top: 2px solid;
+            border-bottom: 2px solid;
+            border-color: $primaryColor;
+        }
+    }
+    &-secondary {
+        border-color: $secondaryColor;
+        @include toast-icon($secondaryColor);
+        &-colored {
+            @include toast-icon(#fff);
+            background-color: $secondaryColor;
+            border: none;
+            .toast_title,
+            .toast_msg {
+                color: #fff;
+            }
+        }
+        &-outline {
+            @include toast-icon($secondaryColor);
+            border-right: 2px solid;
+            border-top: 2px solid;
+            border-bottom: 2px solid;
+            border-color: $secondaryColor;
+        }
+    }
+    &-success {
+        border-color: $successColor;
+        @include toast-icon($successColor);
+        &-colored {
+            @include toast-icon(#fff);
+            background-color: $successColor;
+            border: none;
+            .toast_title,
+            .toast_msg {
+                color: #fff;
+            }
+        }
+        &-outline {
+            @include toast-icon($successColor);
+            border-right: 2px solid;
+            border-top: 2px solid;
+            border-bottom: 2px solid;
+            border-color: $successColor;
+        }
+    }
+    &-danger {
+        border-color: $dangerColor;
+        @include toast-icon($dangerColor);
+        &-colored {
+            @include toast-icon(#fff);
+            background-color: $dangerColor;
+            border: none;
+            .toast_title,
+            .toast_msg {
+                color: #fff;
+            }
+        }
+        &-outline {
+            @include toast-icon($dangerColor);
+            border-right: 2px solid;
+            border-top: 2px solid;
+            border-bottom: 2px solid;
+            border-color: $dangerColor;
+        }
+    }
+    &-warning {
+        border-color: $warningColor;
+        @include toast-icon($warningColor);
+        &-colored {
+            @include toast-icon(#fff);
+            background-color: $warningColor;
+            border: none;
+            .toast_title,
+            .toast_msg {
+                color: #fff;
+            }
+        }
+        &-outline {
+            @include toast-icon($darkColor);
+            border-right: 2px solid;
+            border-top: 2px solid;
+            border-bottom: 2px solid;
+            border-color: $warningColor;
+        }
+    }
+    &-info {
+        border-color: $infoColor;
+        @include toast-icon($infoColor);
+        &-colored {
+            @include toast-icon(#fff);
+            background-color: $infoColor;
+            border: none;
+            .toast_title,
+            .toast_msg {
+                color: #fff;
+            }
+        }
+        &-outline {
+            @include toast-icon($infoColor);
+            border-right: 2px solid;
+            border-top: 2px solid;
+            border-bottom: 2px solid;
+            border-color: $infoColor;
+        }
+    }
+    &-light {
+        border-color: $lightColor;
+        @include toast-icon($lightColor);
+        &-colored {
+            @include toast-icon(#fff);
+            background-color: $lightColor;
+            border: none;
+            .toast_title,
+            .toast_msg {
+                color: #fff;
+            }
+        }
+        &-outline {
+            @include toast-icon($lightColor);
+            border-right: 2px solid;
+            border-top: 2px solid;
+            border-bottom: 2px solid;
+            border-color: $lightColor;
+        }
+    }
+    &-dark {
+        border-color: $darkColor;
+        @include toast-icon($darkColor);
+        &-colored {
+            @include toast-icon(#fff);
+            background-color: $darkColor;
+            border: none;
+            .toast_title,
+            .toast_msg {
+                color: #fff;
+            }
+        }
+        &-outline {
+            @include toast-icon($darkColor);
+            border-right: 2px solid;
+            border-top: 2px solid;
+            border-bottom: 2px solid;
+            border-color: $darkColor;
+        }
+    }
+}
+/* animation in */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(calc(100% + 32px));
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+/* animation out */
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}

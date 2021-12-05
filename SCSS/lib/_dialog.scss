@@ -1,0 +1,46 @@
+//dialog <=> modal
+.dialog {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    animation: dialog linear 0.2s;
+    overflow: auto;
+    .container{
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 1px 1px #ccc;
+    }
+}
+@keyframes dialog {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.dialogComfirm{
+    .container{
+        max-width: 500px;
+        text-align: center;
+        .dialogContent{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        .dialogFooter{
+            justify-content:center;
+            #actionOK{
+                margin-left: 25px;
+            }
+        }
+    }
+}

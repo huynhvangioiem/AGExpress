@@ -1,0 +1,194 @@
+// Layout (SCSS)
+// Developed by TLA
+// version: 1.0
+// Date: 12/08/2021
+
+// Mixins
+@mixin colForPC {
+    @for $i from 1 through 12 {
+        $value: 100 / 12 * $i * 1%;
+        &-#{$i} {
+            flex: 0 0 $value;
+            max-width: $value;
+            margin-left: unset;
+            margin-right: unset;
+            @extend %paddingDistance_PC;
+        }
+    }
+}
+@mixin colForTab {
+    @for $i from 1 through 12 {
+        $value: 100 / 12 * $i * 1%;
+        &-#{$i} {
+            flex: 0 0 $value;
+            max-width: $value;
+            margin-left: unset;
+            margin-right: unset;
+            @extend %paddingDistance-Tab, %blockTab;
+        }
+    }
+}
+@mixin colForMobile {
+    @for $i from 1 through 12 {
+        $value: 100 / 12 * $i * 1%;
+        &-#{$i} {
+            flex: 0 0 $value;
+            max-width: $value;
+            margin-left: unset;
+            margin-right: unset;
+            @extend %paddingDistance-Mobile, %blockMobile;
+        }
+    }
+}
+@mixin colForPerCent {
+    @for $i from 1 through 100 {
+        $value: $i * 1%;
+        &-#{$i} {
+            flex: 0 0 $value;
+            max-width: $value;
+        }
+    }
+}
+@mixin colOffset {
+    @for $i from 0 through 11 {
+        $value: 100 / 12 * $i * 1%;
+        &-#{$i} {
+            margin-left: $value;
+        }
+    }
+}
+
+// For all screen and default (PC)
+//container and container-fluid
+%screen {
+    display: block;
+    padding: 0 $marginDistance_PC;
+    width: 100%;
+}
+.container {
+    @extend %screen;
+    max-width: 1200px;
+    margin: auto;
+    &-fluid {
+        @extend %screen;
+    }
+}
+
+//row
+%paddingDistance_PC {
+    padding-left: $marginDistance_PC;
+    padding-right: $marginDistance_PC;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -$marginDistance_PC;
+    margin-right: -$marginDistance_PC;
+    justify-content: space-between;
+    &.no-gutters {
+        @extend %ml-0;
+        @extend %mr-0;
+        .col {
+            @extend %pl-0;
+            @extend %pr-0;
+        }
+    }
+    .col {
+        &-0 {
+            display: none;
+        }
+        @include colForPC(); //col- 1 to 12
+        &-o {
+            @include colOffset();
+        }
+    }
+    //percent of collum
+    &-cols-percent {
+        .col {
+            @include colForPerCent();
+        }
+    }
+}
+// Large Screen > 1440px
+@media (min-width: 1441px) {
+    .container {
+        max-width: 85%;
+    }
+}
+
+// PC-L 1440px - 1280px
+@media (max-width: 1440px) and (min-width: 1281px) {
+    // .container {
+    // }
+}
+// PC standard 1280px - 1024px
+@media (max-width: 1280px) and (min-width: 1025px) {
+    .container {
+        max-width: 984px;
+    }
+}
+//  PC Small & Tablet Pro 1024px - 740px 
+@media (max-width: 1024px) and (min-width: 741px) {
+    %paddingDistance-Tab {
+        padding-left: $marginDistance-Tab;
+        padding-right: $marginDistance-Tab;
+    }
+    %blockTab {
+        display: block;
+    }
+    .container {
+        max-width: 95%;
+        padding: 0 $marginDistance-Tab;
+    }
+    .row {
+        margin-left: -$marginDistance-Tab;
+        margin-right: -$marginDistance-Tab;
+        .col-m {
+            &-0 {
+                display: none;
+            }
+            @include colForTab();
+            &-o {
+                @include colOffset();
+            }
+        }
+        //percent of collum
+        &-cols-percent {
+            .col-m {
+                @include colForPerCent();
+            }
+        }
+    }
+}
+// Mobile
+@media (max-width: 740px) {
+    %paddingDistance-Mobile {
+        padding-left: $marginDistance-Mobile;
+        padding-right: $marginDistance-Mobile;
+    }
+    %blockMobile {
+        display: block;
+    }
+    .container {
+        padding: 0 $marginDistance-Mobile;
+    }
+    .row {
+        margin-left: -$marginDistance-Mobile;
+        margin-right: -$marginDistance-Mobile;
+        .col-s {
+            &-0 {
+                display: none;
+            }
+            @include colForMobile();
+            &-o {
+                @include colOffset();
+            }
+        }
+        //percent of collum
+        &-cols-percent {
+            .col-s {
+                @include colForPerCent();
+            }
+        }
+    }
+}

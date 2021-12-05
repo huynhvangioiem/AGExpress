@@ -1,0 +1,53 @@
+// Button Style (SCSS)
+// Developed by TLA
+// version: 1.0
+// Date: 05/09/2021
+
+//btnStandard
+@mixin btnStandard($name,$color) {
+    &-#{$name}{
+        background-color: $color;
+    }
+    //btnOutline
+    &-outline-#{$name}{
+        color: $color;
+        border: 1px solid $color;
+        &:hover{
+            background-color: $color;
+            color: #fff;
+        }
+    }
+}
+
+.btn{
+    display: inline-block;
+    @extend %border-outline_None;
+    text-decoration: none;
+    background-color: transparent;
+    padding: 10px 14px;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+        opacity: 0.8;
+    }
+    &-rounded{
+        border-radius: 10rem;
+    }
+    &-social{
+        i{
+            width: 16px;
+        }
+    }
+
+    @include btnStandard(primary,$primaryColor);
+    @include btnStandard(secondary,$secondaryColor);
+    @include btnStandard(success,$successColor);
+    @include btnStandard(danger,$dangerColor);
+    @include btnStandard(warning,$warningColor);
+    @include btnStandard(info,$infoColor);
+    @include btnStandard(light,$lightColor);
+    @include btnStandard(dark,$darkColor);
+}

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGEXPRESS</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- JQUERY -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+  <!-- fontawesome -->
+
+  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"> <!-- DataTables-->
+
+  <link rel="stylesheet" href="CSS/styles.css"> <!-- Styles -->
+  <link rel="stylesheet" href="CSS/style.css"> <!-- Style -->
+  <link rel="stylesheet" href="CSS/user.css"> <!-- User -->
+
+  <script defer src="JS/dataTables.js"></script> <!-- Call DataTables -->
+  <script defer src="JS/dialog.js"></script> <!-- Dialog -->
+  <script defer src="JS/toast.js"></script>
+  <!--toast -->
+  <script defer src="JS/formValidator.js"></script> <!-- form Validator -->
+
+  <script defer src="JS/user.js"></script> <!-- User -->
+
+
+</head>
+
+<body hidden>
+  <div class="container-fluid">
+    <!-- Banner -->
+    <div class="row banner">
+      <div class="container">
+        <div class="row bannerContent">
+          <div class="col-2 col-m-2 col-s-0 logo">
+            <img class="img-responsive" src="img/Logo4.jpg" alt="">
+          </div>
+          <div class="col-8 col-m-8 col-s-12 header">
+            <h1>AGEXPRESS</h1>
+            <h1>Hệ Thống Quản Lý</h1>
+          </div>
+          <div class="col-2 col-m-2 col-s-0">
+            <div class="profile">
+              <img class="img-responsive" src="img/Logo4.jpg" alt="">
+              <ul class="profileMenu">
+                <li class="account">
+                  <h3>Huỳnh Văn Giỏi Em</h3>
+                  <h3>0335687425</h3>
+                </li>
+                <li><a href="">Thông tin cá nhân</a></li>
+                <li><a href="">Đổi mật khẩu</a></li>
+                <li><a href="">Đăng xuất</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Menu -->
+    <div class="row menu">
+      menu
+    </div>
+    <!-- Content -->
+    <div class="row main">
+      <div class="container">
+        <div class="row mainContent">
+          <div class="col-3 col-m-4 col-s-0 leftContent">
+            Bộ lọc
+          </div>
+          <div class="col-9 col-m-8 col-s-12">
+            <div class="row">
+              <div class="col-6 col-m-6 col-s-12 col-o-6 action">
+                <button class="btn btn-success" id="callAddUser" type="button"><i class="fas fa-plus"></i>Thêm Tài
+                  Khoản</button>
+              </div>
+            </div>
+            <div class="row userList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div class="row footer">
+      <div class="container">
+        <div class="row footerContent">
+          <div class="col-3 col-m-3 col-s-12">
+            <h3>Copyright © 2022 AGEXPRESS</h3>
+          </div>
+          <div class="col-6 col-m-6 col-s-12">
+            <h3>Công Ty TNHH AGEXPRESS</h3>
+            <h4>Số 94, Triệu Thị Trinh, Phường Bình Khánh, Long Xuyên, An Giang</h4>
+          </div>
+          <div class="col-3 col-m-3 col-s-12">
+            <h3><a href="https://huynhvangioiem.github.io/TLA_Library/">Development by TLAIT</a></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Add user -->
+  <div class="dialog" id="addUserDialog">
+    <div class="container">
+      <div class="row dialogHeader">
+        <div class="col-12 col-m-12 col-s-12">
+          <h1 class="title">Thêm Tài Khoản</h1>
+        </div>
+      </div>
+      <form method="post" class="formAddUser" id="formAddUser" action="">
+        <div class="row dialogContent">
+          <div class="col-12 col-m-12 col-s-12">
+            <div class="form-group">
+              <input id="userName" class="form-control" type="text" name="userName" placeholder="Số điện thoại">
+              <div class="form-message"></div>
+            </div>
+            <div class="form-group">
+              <input id="fullName" class="form-control" type="text" name="fullName" placeholder="Họ và tên">
+              <div class="form-message"></div>
+            </div>
+            <div class="form-group">
+              <input id="password" class="form-control" type="password" name="password" placeholder="Mật khẩu">
+              <div class="form-message"></div>
+            </div>
+            <div class="form-group">
+              <input id="checkPass" class="form-control" type="password" name="checkPass"
+                placeholder="Nhập lại mật khẩu">
+              <div class="form-message"></div>
+            </div>
+            <div class="form-group">
+              <select id="userType" class="form-control" name="userType"></select>
+              <div class="form-message"></div>
+            </div>
+            <div class="form-group">
+              <select id="userPlace" class="form-control" name="userPlace"></select>
+              <div class="form-message"></div>
+            </div>
+            <div class="form-check">
+              <div class="form-group form-control">
+                <h3 class="heading">Phân Quyền</h3>
+                <input id="permiss1" class="form-check-input" type="checkbox" name="permiss" value="1" checked>
+                <label for="permiss1" class="form-check-label">Phân quyền 1</label>
+                <input id="permiss2" class="form-check-input" type="checkbox" name="permiss" value="2" checked>
+                <label for="permiss2" class="form-check-label">Phân quyền 2</label>
+                <input id="permiss3" class="form-check-input" type="checkbox" name="permiss" value="3" checked>
+                <label for="permiss3" class="form-check-label">Phân quyền 3</label>
+                <input id="permiss4" class="form-check-input" type="checkbox" name="permiss" value="4" checked>
+                <label for="permiss4" class="form-check-label">Phân quyền 4</label>
+                <input id="permiss5" class="form-check-input" type="checkbox" name="permiss" value="5" checked>
+                <label for="permiss5" class="form-check-label">Phân quyền 5</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row dialogFooter">
+          <button class="btn btn-warning" type="button" onclick="showUserType('#userTypeManager')">Quản Lý Loại Tài
+            Khoản</button>
+          <button class="btn btn-warning" type="button" onclick="showUserPlace('#userPlaceManager')">Quản Lý Điểm Giao
+            Dịch</button>
+          <button class="btn btn-success" type="submit">Thêm Tài Khoản</button>
+          <button class="btn btn-info" type="reset">Nhập lại</button>
+          <button class="btn btn-danger" type="button" onclick="hideDialog('#addUserDialog')">Hủy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Modal management user type -->
+  <div class="dialog" id="userTypeManager">
+    <div class=" container">
+      <div class="row dialogHeader">
+        <div class="col-12 col-m-12 col-s-12">
+          <h1 class="title">Quản Lý Loại Tài Khoản</h1>
+        </div>
+      </div>
+      <div class="row dialogContent">
+        <div class="col-4 col-m-4 col-s-12">
+          <form action="" method="POST" class="addUserType" id="addUserType">
+            <legend class="formTitle">Thêm Loại Tài Khoản</legend>
+            <div class="form-group">
+              <input hidden id="idType" class="form-control" type="text" name="idType">
+            </div>
+            <div class="form-group">
+              <input id="type" class="form-control" type="text" name="type" placeholder="Loại tài khoản">
+              <div class="form-message"></div>
+            </div>
+            <div class="form-group">
+              <input id="desc" class="form-control" type="text" name="desc" placeholder="Mô tả">
+              <div class="form-message"></div>
+            </div>
+            <button type="reset"
+              onclick="$('#addUserType #submitType').html('Thêm');$('#addUserType .formTitle').html('Thêm Loại Tài Khoản');"
+              class="btn btn-warning">Hủy</button>
+            <button type="submit" class="btn btn-primary" id="submitType">Thêm</button>
+          </form>
+        </div>
+        <div class="col-8 col-m-8 col-s-12">
+          <div class="row" id="userTypeList"></div>
+        </div>
+      </div>
+      <div class="row dialogFooter">
+        <button class="btn btn-danger" type="button" onclick="hideDialog('#userTypeManager')">Đóng</button>
+      </div>
+    </div>
+  </div>
+  <!-- Modal management user palce -->
+  <div class="dialog" id="userPlaceManager">
+    <div class=" container">
+      <div class="row dialogHeader">
+        <div class="col-12 col-m-12 col-s-12">
+          <h1 class="title">Quản Lý Điểm Giao Dịch</h1>
+        </div>
+      </div>
+      <div class="row dialogContent">
+        <div class="col-4 col-m-4 col-s-12">
+          <form action="" method="POST" class="addUserPlace" id="addUserPlace">
+            <legend class="formTitle">Thêm Điểm Giao Dịch</legend>
+            <div class="form-group">
+              <input hidden id="idUserPlace" class="form-control" type="text" name="idUserPlace">
+            </div>
+            <div class="form-group">
+              <input id="place" class="form-control" type="text" name="place" placeholder="Điểm giao dịch">
+              <div class="form-message"></div>
+            </div>
+            <div class="form-group">
+              <input id="address" class="form-control" type="text" name="address" placeholder="Địa chỉ">
+              <div class="form-message"></div>
+            </div>
+            <button type="reset"
+            onclick="$('#addUserPlace #SubmitPlace').html('Thêm');$('#addUserPlace .formTitle').html('Thêm Điểm Giao Dịch');"
+            class="btn btn-warning">Hủy</button>
+            <button type="submit" class="btn btn-primary" id="SubmitPlace">Thêm</button>
+          </form>
+        </div>
+        <div class="col-8 col-m-8 col-s-12">
+          <div class="row" id="userPlaceList"></div>
+        </div>
+      </div>
+      <div class="row dialogFooter">
+        <button class="btn btn-danger" type="button" onclick="hideDialog('#userPlaceManager')">Đóng</button>
+      </div>
+    </div>
+  </div>
+  <!-- Dialog Confirm -->
+  <div class="dialog dialogComfirm"></div>
+  <!-- Toast Msg -->
+  <div id="toast"></div>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+.dataTables_filter {
+    width: 35%;
+    input[type="search"] {
+        width: calc(100% - 100px);
+    }
+}
+.dataTables_length, .dataTables_filter{
+    margin-bottom: 10px;
+}
+.dataTable {
+    //All selector of tables
+    box-shadow: 1px 1px 1px 1px #ccc;
+    th {
+        background-color: #dcf4fc;
+    }
+}

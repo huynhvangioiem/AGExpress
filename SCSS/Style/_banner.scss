@@ -1,0 +1,55 @@
+.banner {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: #ce1d29;
+    color: #fff;
+    .bannerContent {
+        align-items: center;
+        .logo {
+            img {
+                max-width: 75px;
+            }
+        }
+        .profile {
+            position: relative;
+            margin: auto;
+            max-width: 50px;
+            cursor: pointer;
+            z-index: 9;
+            img {
+                border-radius: 25px;
+            }
+            &:hover {
+                .profileMenu {
+                    display: block;
+                }
+            }
+            .profileMenu {
+                display: none;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                // padding: 10px;
+                width: 250px;
+                text-align: left;
+                background-color: #fff;
+                box-shadow: 1px 1px 1px 1px #ccc;
+                color: #000;
+                font-size: 18px;
+                li {
+                    a {
+                        padding: 5px 10px;
+                        display: block;
+                    }
+                    &:not(li:first-child):hover {
+                        background-color: #f3f3f3;
+                    }
+                    &:first-child {
+                        padding: 5px 10px;
+                    }
+                }
+            }
+        }
+    }
+}
