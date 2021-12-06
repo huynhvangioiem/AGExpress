@@ -9,8 +9,6 @@ if ( isset($_POST['userName']) && isset($_POST['password']) ) {
 
         $resultLogin = mysqli_query($connect, "SELECT * FROM ageuser WHERE ageuser.AGEUserName = '$userName' AND ageuser.AGEUserPassword = '$password'") or die(mysqli_connect_error($connect));
         if (mysqli_num_rows($resultLogin) == 1) {
-            $rowUser = mysqli_fetch_array($resultLogin, MYSQLI_ASSOC);
-            $_SESSION["userName"] = $rowUser['AGEUserName'];
             echo "
                 <script>
                     $(document).ready(() => {
@@ -24,7 +22,14 @@ if ( isset($_POST['userName']) && isset($_POST['password']) ) {
                     })
                 </script> 
             ";
-            echo '<meta http-equiv="refresh" content="0.5;URL=/" />';
+            $rowUser = mysqli_fetch_array($resultLogin, MYSQLI_ASSOC);
+            if($rowUser['AGEUserStatus']==1){
+                $_SESSION["userName"] = $rowUser['AGEUserName'];
+                echo '<meta http-equiv="refresh" content="0.5;URL=/" />';
+            }else{
+                $_SESSION["onlySetPass"] = $rowUser['AGEUserName'];
+                echo '<meta http-equiv="refresh" content="0.5;URL=account.html" />';
+            }
         } else {
             echo "
                 <script>

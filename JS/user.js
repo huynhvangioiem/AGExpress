@@ -1,15 +1,15 @@
 // 1. check login
 window.onload = function () {
     $.get("process/checkLogin.php", function (response) {
-        if (!response) window.location = "/login.html";
+        if (response!="true") window.location = "/login.html";
         else $("body").show();
     });
 }
 // 2. show add User Dialog
 $('#callAddUser').click(function () {
     showDialog('#addUserDialog');
-    listOptionsUserType();
-    listOptionsUserPlace();
+    listOptionsUserType("#formAddUser #userType");
+    listOptionsUserPlace("#formAddUser #userPlace");
 })
 // 3. xu ly form
 document.addEventListener('DOMContentLoaded', function () {
@@ -33,6 +33,20 @@ document.addEventListener('DOMContentLoaded', function () {
         ],
         onSubmit: function (data) {
             addUser(data);
+        }
+    });
+    Validator({
+        form: '#formEditUser',
+        formGroupSelector: '.form-group',
+        errorSelector: '.form-message',
+        rules: [
+            Validator.isRequired('#fullName_'),
+            Validator.maxLength('#fullName_', 100),
+            Validator.isSelected('#userType_', 'Vui lòng chọn loại tài khoản!'),
+            Validator.isSelected('#userPlace_', 'Vui lòng chọn loại nơi làm việc!'),
+        ],
+        onSubmit: function (data) {
+            updateUser(data);
         }
     });
 
@@ -163,23 +177,23 @@ $(document).ready(function () {
 })
 
 // 10. show list options user type
-function listOptionsUserType(val) {
+function listOptionsUserType(selector, val) {
     $.post(
         "/process/getOptionsUserType.php",
         { action: 'getOptionsUserType', val : val },
         function (response) {
-            $('#formAddUser #userType').html(response);
+            $(selector).html(response);
         },
         'text'
     );
 }
 // 11. show list options user place
-function listOptionsUserPlace(val) {
+function listOptionsUserPlace(selector, val) {
     $.post(
         "/process/getOptionsUserPlace.php",
         { action: 'getOptionsUserPlace', val: val},
         function (response) {
-            $('#formAddUser #userPlace').html(response);
+            $(selector).html(response);
         },
         'text'
     );
@@ -299,30 +313,27 @@ function processDelUser(userName) {
 }
 //19. Edit user
 function editUser(userName, fullName, type, place) {
-    showDialog('#addUserDialog');
-    $("#addUserDialog .title").html("Cập Nhật Thông Tin Tài Khoản");
-    $("#addUserDialog .dialogContent").html(
-        `
-        <div class="col-12 col-m-12 col-s-12">
-            <div class="form-group">
-              <input id="userName" class="form-control" type="text" name="userName" value="${userName}" disabled="disabled">
-              <div class="form-message"></div>
-            </div>
-            <div class="form-group">
-              <input id="fullName" class="form-control" type="text" name="fullName" value="${fullName}">
-              <div class="form-message"></div>
-            </div>
-            <div class="form-group">
-              <select id="userType" class="form-control" name="userType"></select>
-              <div class="form-message"></div>
-            </div>
-            <div class="form-group">
-              <select id="userPlace" class="form-control" name="userPlace"></select>
-              <div class="form-message"></div>
-            </div>
-          </div>
-        `
+    showDialog('#editUserDialog');
+    $('#formEditUser #userName_').val(userName);
+    $('#formEditUser #fullName_').val(fullName);
+    listOptionsUserType("#formEditUser #userType_",type);
+    listOptionsUserPlace("#formEditUser #userPlace_",place);
+}
+function updateUser(data) {
+    $.post(
+        "/process/editUser.php",
+        {
+            userName: data.userName_,
+            fullName: data.fullName_,
+            userType: data.userType_,
+            userPlace: data.userPlace_,
+            permiss: data.permiss,
+        },
+        function (response) {
+            $('#toast').html(response);
+            hideDialog('#editUserDialog');
+            listUsers();
+        },
+        'text'
     );
-    listOptionsUserType(type);
-    listOptionsUserPlace(place);
 }

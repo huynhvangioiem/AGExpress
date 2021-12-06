@@ -1,5 +1,5 @@
 Created Date: 30/10/2021
-Last Updated: 30/10/2021
+Last Updated: 05/12/2021
 Author: TLA
 
 
@@ -29,18 +29,18 @@ III. Luồng xử lý:
          - Submit form: post data to login.php
          - login.php: check input data, process, IF tài khoản tồn tại THEN thành công, chuyển đến index.php ELSE thất bại.
       2.3 Quên mật khẩu => show dialog quên mật khẩu
-      * Not done
       2.4 Đăng nhập thành công lần đầu => đổi mật khẩu
+      * Not done
       2.5 go to ./process/login.php => page not found
       2.6 go to ./process/checkLogin.php => page not found
    3. User:
       * Done
-      2.1 Kiểm tra đăng nhập - checkLogin.php
-      2.2 Render list user
+      x2.1 Kiểm tra đăng nhập - checkLogin.php
+      x2.2 Render list user
          2.2.1: show user in data list
          - When document is ready, post action to getUsers.php
          - getUsers.php: check input data, processing, response datatables.
-      2.3 Add user
+      x2.3 Add user
          2.3.1 show add user dialog.
          2.3.2 show list options about user type.
             - call function
@@ -56,7 +56,7 @@ III. Luồng xử lý:
             - Reset form
             - hide dialog
             - render again list user
-      2.4 User Type
+      x2.4 User Type
          2.4.1: show dialog user type
          2.4.2: render list user type
             - post data {action} to getUserType.php
@@ -82,14 +82,15 @@ III. Luồng xử lý:
             - Reset form
             - render again list user type
             - Render again list options about user type
-      2.5 User place
+      x2.5 User place
          also 2.4
-      2.6 Delete user
+      x2.6 Delete user
          - show dialog confirm => call function
          - post data to deleteUser.php
          - deleteUser.php: check input data, processing, response toast.
          - render again list user
-      2.7 Edit user
+      x2.7 Edit user
+
       * Not done
 
 

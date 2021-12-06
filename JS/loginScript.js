@@ -1,7 +1,7 @@
 //check login
 window.onload = function () {
     $.get("./process/checkLogin.php", function (response) {
-        if (response) window.location = "/";
+        if (response===true)window.location = "/";
         else $("body").show();
     });
 }
