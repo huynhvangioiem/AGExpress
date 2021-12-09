@@ -92,7 +92,11 @@ III. Luồng xử lý:
       x2.7 Edit user
 
       * Not done
-
+   4. bol
+      x4.1 Create bol
+      4.2 render bol list
+IV. GHi chú
+   4.1 bổ sung thêm thông tin hướng dẫn phát
 
 
       

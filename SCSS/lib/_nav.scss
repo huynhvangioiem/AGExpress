@@ -1,0 +1,321 @@
+// Navigation Style (SCSS)
+// Developed by TLA
+// version: 1.0
+// Date: 14/08/2021
+
+%text {
+  color: inherit;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+.navbar {
+  display: flex;
+  width: 100%;
+  padding: 0 10px;
+  align-items: center;
+
+  // navbar-brand
+  &-brand {
+    align-self: center;
+    padding: 0 16px;
+    font-size: 20px;
+    @extend %text;
+  }
+
+  // navbar-toggler
+  &-toggler {
+    display: none;
+  }
+
+  // navbar-collapse
+  &-collapse {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    // navbar-nav
+    .navbar-nav {
+      // navbar-item for all
+      .nav-item {
+        cursor: pointer;
+        position: relative;
+        // link
+        a {
+          @extend %text;
+          display: block;
+          padding: 12px;
+          transition: all 0.2s linear;
+        }
+        // .nav-item .subnav (all sub)
+        .sub-nav {
+          display: none;
+          position: absolute;
+          min-width: max-content;
+          // .sub-nav .nav-item
+          .nav-item {
+            z-index: 9;
+            box-shadow: 0px 2px 5px #f1f1f1;
+            a {
+              color: #000;
+              // opacity: 0.75;
+              text-transform: capitalize;
+              background-color: #fff;
+              border-bottom: 1px solid #f1f1f1;
+            }
+            &:hover {
+              > a {
+                background-color: #f9f9f9;
+              }
+            }
+            > .sub-nav {
+              left: 100%;
+              top: 0;
+              padding-left: 15px;
+              box-sizing: content-box;
+              width: 100%;
+            }
+          }
+          .sub-nav + a::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            border-style: solid;
+            border-width: 5px 0 5px 5px;
+            border-color: transparent transparent transparent #9a9a9a;
+          }
+        }
+        &:hover {
+          > .sub-nav {
+            display: block;
+          }
+        }
+      }
+
+      // navbar-item for lv1
+      > .nav-item {
+        display: inline-block;
+        text-transform: uppercase;
+        margin-left: -4px;
+        // .nav-item::after
+        &:not(&:last-child, .nav-search) {
+          &::after {
+            content: "";
+            position: absolute;
+            height: 50%;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            border-right: 2px solid white;
+          }
+        }
+        // > .nav-item > .subnav (sub 1)
+        > .sub-nav {
+          top: 100%;
+          right: 0;
+          left: 0;
+        }
+      }
+      //nav-search
+      .nav-search {
+        %search {
+          padding: 5px;
+          font-size: 16px;
+          @extend %border-outline_None;
+        }
+        form {
+          background-color: #fff;
+          input[type="text"] {
+            @extend %search;
+          }
+          button {
+            cursor: pointer;
+            margin-left: -4px;
+            @extend %search;
+          }
+        }
+      }
+    }
+  }
+
+  //navbar-light
+  &-light {
+    background-color: $lightColor;
+    color: rgba(0, 0, 0, 0.5);
+    .nav-item:hover {
+      a {
+        color: rgba(0, 0, 0, 0.7);
+      }
+    }
+  }
+  //navbar-dark
+  &-dark {
+    background-color: $darkColor;
+    color: rgba(255, 255, 255, 0.5);
+    .nav-item:hover {
+      a {
+        color: rgba(255, 255, 255, 0.75);
+      }
+    }
+  }
+  //navbar-primary
+  &-primary {
+    background-color: $primaryColor;
+    color: rgba(255, 255, 255, 0.8);
+    .nav-item:hover {
+      a {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+  //navbar-danger
+  &-danger {
+    background-color: $dangerColor;
+    color: rgba(255, 255, 255, 0.85);
+    .nav-item:hover {
+      a {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+  //navbar-success
+  &-success {
+    background-color: $successColor;
+    color: rgba(255, 255, 255, 0.85);
+    .nav-item:hover {
+      a {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+  //navbar-warning
+  &-warning {
+    background-color: $warningColor;
+    color: rgba(255, 255, 255, 0.85);
+    .nav-item:hover {
+      a {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+  //navbar-info
+  &-info {
+    background-color: $infoColor;
+    color: rgba(255, 255, 255, 0.85);
+    .nav-item:hover {
+      a {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+}
+// responsive
+@media (max-width: 1280px) {
+  .navbar {
+    &-collapse {
+      .navbar-nav {
+        .nav-search {
+          input[type="text"] {
+            width: 150px;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 0px;
+    &-collapse {
+      .navbar-nav {
+        .nav-item {
+          a {
+            padding-left: 10px;
+            padding-right: 10px;
+          }
+        }
+        .nav-search {
+          display: none;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    &-toggler {
+      display: inline-block;
+      padding: 15px;
+    }
+    &-collapse {
+      display: none;
+      .navbar-nav {
+        .nav-item {
+          display: flex;
+          flex-direction: column-reverse;
+          flex-wrap: wrap;
+          margin-left: unset;
+          border-top: 1px solid #cccccc;
+          a {
+            flex: 0 0 100%;
+          }
+          &::after {
+            content: none !important;
+          }
+          &:hover {
+            > a {
+              background-color: rgba(0, 0, 0, 0.2);
+            }
+          }
+          .sub-nav {
+            display: block;
+            position: relative;
+            flex: 0 0 100%;
+            padding-left: unset !important;
+            top: unset !important;
+            left: unset !important;
+            width: auto !important;
+            .nav-item {
+              background-color: unset;
+              box-shadow: unset;
+              a {
+                background-color: inherit;
+                color: inherit;
+                padding-left: 20px;
+                border: none;
+                &::after {
+                  content: none;
+                }
+              }
+              > .sub-nav {
+                a {
+                  padding-left: 40px;
+                }
+              }
+              &:hover {
+                > a {
+                  background-color: rgba(0, 0, 0, 0.2);
+                }
+              }
+            }
+          }
+        }
+        .nav-search {
+          padding: 5px;
+          form {
+            display: flex;
+          }
+          input[type="text"] {
+            flex: 1;
+          }
+        }
+      }
+    }
+    &-collapse.show {
+      display: block;
+    }
+  }
+}

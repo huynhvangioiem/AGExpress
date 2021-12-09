@@ -8,4 +8,22 @@ body {
     @import "datatable";
     /* Footer */
     @import "footer";
+    .main{
+        margin-top: 15px;
+        margin-bottom: 15px;
+        .leftContent{
+            min-height: calc(100vh - 255px);
+        }
+        .mainContent{
+            .action{
+                text-align: right;
+                margin-bottom: 15px;
+                .btn {
+                    i {
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+    }
 }

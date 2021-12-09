@@ -17,6 +17,18 @@
         padding: 15px;
         border-radius: 5px;
         box-shadow: 1px 1px 1px 1px #ccc;
+        .dialogHeader{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .dialogFooter {
+            justify-content: space-around;
+            .btn {
+                min-width: 100px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+        }
     }
 }
 @keyframes dialog {

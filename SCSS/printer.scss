@@ -1,0 +1,57 @@
+body {
+    .container {
+        display: none;
+    }
+}
+@media print {
+    @page {
+        margin: 5mm;
+        size: A5 landscape;
+    }
+    body {
+        border: 1px solid black;
+
+        width: 210mm;
+        height: 145mm;
+        .container {
+            display: block;
+            .header {
+                height: 30mm;
+                text-align: center;
+                align-items: center;
+                .logo {
+                    padding: 1px;
+                    img {
+                        width: 100px;
+                    }
+                }
+                .bardcode{
+                    padding: 5px;
+                }
+            }
+            .content {
+                height: 95mm;
+                .row {
+                    margin-bottom: 15px;
+                    .title {
+                        margin-bottom: 5px;
+                    }
+                    div {
+                        line-height: 1.5;
+                    }
+                }
+                .sign {
+                    text-align: center;
+                }
+                .height30{
+                    height: 30mm;
+                }
+            }
+            .footer {
+                height: 20mm;
+                align-items: center;
+                border-top: 1px dashed #000;
+            }
+        }
+    }
+}

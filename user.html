@@ -44,34 +44,35 @@
             <h1>Hệ Thống Quản Lý</h1>
           </div>
           <div class="col-2 col-m-2 col-s-0">
-            <div class="profile">
-              <img class="img-responsive" src="img/Logo4.jpg" alt="">
-              <ul class="profileMenu">
-                <li class="account">
-                  <h3>Huỳnh Văn Giỏi Em</h3>
-                  <h3>0335687425</h3>
-                </li>
-                <li><a href="">Thông tin cá nhân</a></li>
-                <li><a href="">Đổi mật khẩu</a></li>
-                <li><a href="">Đăng xuất</a></li>
-              </ul>
-            </div>
+            <div class="profile"></div>
           </div>
         </div>
       </div>
     </div>
     <!-- Menu -->
-    <div class="row menu">
-      menu
-    </div>
+		<div class="row menu">
+			<nav class="navbar navbar-warning">
+				<div class="container">
+					<span class="navbar-toggler" data-target="#menu"><i class="fas fa-bars"></i></span>
+					<div class="navbar-collapse" id="menu">
+						<ul class="navbar-nav navbar-left">
+							<li class="nav-item"><a class="nav-link" href="/">Tổng Quan</a></li>
+							<li class="nav-item"><a class="nav-link" href="/bol.html">Vận Đơn</a></li>
+							<li class="nav-item"><a class="nav-link" href="#!">Báo Cáo</a></li>
+							<li class="nav-item"><a class="nav-link" href="/user.html">Tài Khoản</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
     <!-- Content -->
     <div class="row main">
       <div class="container">
-        <div class="row mainContent">
+        <div class="row">
           <div class="col-3 col-m-4 col-s-0 leftContent">
             Bộ lọc
           </div>
-          <div class="col-9 col-m-8 col-s-12">
+          <div class="col-9 col-m-8 col-s-12 mainContent">
             <div class="row">
               <div class="col-6 col-m-6 col-s-12 col-o-6 action">
                 <button class="btn btn-success" id="callAddUser" type="button"><i class="fas fa-plus"></i>Thêm Tài
@@ -155,12 +156,12 @@
           </div>
         </div>
         <div class="row dialogFooter">
-          <button class="btn btn-warning" type="button" onclick="showUserType('#userTypeManager')">Quản Lý Loại Tài
+          <button class="btn btn-info" type="button" onclick="showUserType('#userTypeManager')">Quản Lý Loại Tài
             Khoản</button>
-          <button class="btn btn-warning" type="button" onclick="showUserPlace('#userPlaceManager')">Quản Lý Điểm Giao
+          <button class="btn btn-info" type="button" onclick="showUserPlace('#userPlaceManager')">Quản Lý Điểm Giao
             Dịch</button>
           <button class="btn btn-success" type="submit">Thêm Tài Khoản</button>
-          <button class="btn btn-info" type="reset">Nhập lại</button>
+          <button class="btn btn-warning" type="reset">Nhập lại</button>
           <button class="btn btn-danger" type="button" onclick="hideDialog('#addUserDialog')">Hủy</button>
         </div>
       </form>

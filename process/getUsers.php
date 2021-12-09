@@ -6,14 +6,28 @@
             $index = 1;
             $res = "";
             while($data=mysqli_fetch_array($get, MYSQLI_ASSOC)){
+                switch ($data['AGEUserStatus']) {
+                    case 0:
+                        $status = "Chưa kích hoạt";
+                        break;
+                    case 1:
+                        $status = "Hoạt động";
+                        break;
+                    case -1:
+                        $status = "Vô hiệu";
+                        break;
+                    
+                };
                 $res .= '
                     <tr>
                         <td>'.$data['AGEUserName'].'</td>
                         <td>'.$data['AGEUserFullName'].'</td>
                         <td>'.$data['AGEUserTypeName'].'</td>
                         <td>'.$data['AGEPlaceName'].'</td>
+                        <td>'.$status.'</td>
                         <td>
                             <button type="button" class="btn btn-info" onclick="editUser(\''.$data["AGEUserName"].'\', \''.$data["AGEUserFullName"].'\', '.$data["AGEUserTypeID"].', '.$data["AGEPlaceID"].')"><i class="fas fa-edit"></i></button>
+                            <button type="button" class="btn btn-warning" onclick="lockUser(\''.$data["AGEUserName"].'\')"><i class="fas fa-lock"></i></button>
                             <button type="button" class="btn btn-danger" onclick="deleteUser(\''.$data["AGEUserName"].'\')"><i class="far fa-trash-alt"></i></button>
                         </td>
                     </tr>
@@ -29,6 +43,7 @@
                         <th>Họ Và Tên</th>
                         <th>Tài Khoản</th>
                         <th>Địa Điểm</th>
+                        <th>Trạng Thái</th>
                         <th>Tùy Chọn</th>
                         </tr>
                     </thead>

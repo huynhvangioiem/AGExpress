@@ -1,58 +1,8 @@
-.main {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    .container {
-        .mainContent {
-            .leftContent {
-                min-height: calc(100vh - 255px);
-            }
-            // .formSearch {
-            //     display: flex;
-            //     width: 80%;
-            //     border: 1px solid #b3b3b3;
-            //     border-radius: 10px;
-            //     background-color: #fff;
-            //     #inputSearch {
-            //         display: inline-block;
-            //         width: calc(100% - 54px);
-            //         margin: auto;
-            //         border: none;
-            //         border-radius: 10px;
-            //         height: 35px;
-            //         background-color: #fff;
-            //     }
-            //     .btnSearch {
-            //         width: 50px;
-            //         height: 35px;
-            //         border-radius: 10px;
-            //         background-color: #fff;
-            //         color: #b3b3b3;
-            //         &:hover {
-            //             color: #000;
-            //         }
-            //     }
-            // }
-            .action {
-                text-align: right;
-                margin-bottom: 15px;
-                .btn {
-                    i {
-                        margin-right: 5px;
-                    }
-                }
-            }
-        }
-    }
-}
 #addUserDialog,
 #editUserDialog,
 #userTypeManager,
 #userPlaceManager {
     .container {
-        .dialogHeader {
-            text-align: center;
-            margin-bottom: 20px;
-        }
         .dialogContent {
             margin-top: 15px;
             margin-bottom: 10px;
@@ -60,20 +10,12 @@
                 text-align: center;
             }
         }
-        .dialogFooter {
-            justify-content: space-around;
-            .btn {
-                min-width: 100px;
-                margin-top: 5px;
-                margin-bottom: 5px;
-            }
-        }
     }
 }
-#userListTable{
-    tbody{
-        tr{
-            td:not(:nth-child(2)){
+#userListTable {
+    tbody {
+        tr {
+            td:not(:nth-child(2)) {
                 text-align: center;
             }
         }
@@ -83,7 +25,7 @@
 #userPlaceTable {
     tbody {
         tr {
-            td:not(:nth-child(3)){
+            td:not(:nth-child(3)) {
                 text-align: center;
             }
         }

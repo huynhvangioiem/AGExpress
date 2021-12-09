@@ -1,9 +1,37 @@
 // 1. check login
 window.onload = function () {
     $.get("process/checkLogin.php", function (response) {
-        if (response!="true") window.location = "/login.html";
+        if (response != "true") window.location = "/login.html";
         else $("body").show();
     });
+}
+//get data to profile
+$(document).ready(function () {
+    $.post(
+        "/process/getOrther.php",
+        { funcName: "getSession" },
+        function (response) {
+            $.post(
+                "/process/getProfile.php",
+                { userName: response },
+                function (response) {
+                    $(".profile").html(response);
+                },
+                'text'
+            );
+        },
+        'text'
+    );
+})
+//logOut
+function logout() {
+    $.get(
+        "/process/logout.php",
+        function (response) {
+            window.location = "/";
+        },
+        'text'
+    );
 }
 // 2. show add User Dialog
 $('#callAddUser').click(function () {
@@ -112,7 +140,7 @@ function addUserType(data) {
             $('#toast').html(response);
             $('#addUserType')[0].reset();
             listUserType();
-            listOptionsUserType();
+            listOptionsUserType("#formAddUser #userType");
         },
         'text'
     );
@@ -132,7 +160,7 @@ function processDelType(id, name) {
             $('#toast').html(response);
             hideDialog('.dialog.dialogComfirm');
             listUserType();
-            listOptionsUserType();
+            listOptionsUserType("#formAddUser #userType");
         },
         'text'
     );
@@ -155,7 +183,7 @@ function updateUserType(data) {
             $("#addUserType .formTitle").html("Thêm Loại Tài Khoản");
             $("#addUserType #submitType").html("Thêm");
             listUserType();
-            listOptionsUserType();
+            listOptionsUserType("#formAddUser #userType");
         },
         'text'
     );
@@ -180,7 +208,7 @@ $(document).ready(function () {
 function listOptionsUserType(selector, val) {
     $.post(
         "/process/getOptionsUserType.php",
-        { action: 'getOptionsUserType', val : val },
+        { action: 'getOptionsUserType', val: val },
         function (response) {
             $(selector).html(response);
         },
@@ -191,7 +219,7 @@ function listOptionsUserType(selector, val) {
 function listOptionsUserPlace(selector, val) {
     $.post(
         "/process/getOptionsUserPlace.php",
-        { action: 'getOptionsUserPlace', val: val},
+        { action: 'getOptionsUserPlace', val: val },
         function (response) {
             $(selector).html(response);
         },
@@ -223,7 +251,7 @@ function addUserPlace(data) {
             $('#toast').html(response);
             $('#addUserPlace')[0].reset();
             listUserPlace();
-            listOptionsUserPlace();
+            listOptionsUserPlace("#formAddUser #userPlace");
         },
         'text'
     );
@@ -243,7 +271,7 @@ function processDelPlace(id, name) {
             $('#toast').html(response);
             hideDialog('.dialog.dialogComfirm');
             listUserPlace();
-            listOptionsUserPlace();
+            listOptionsUserPlace("#formAddUser #userPlace");
         },
         'text'
     );
@@ -266,7 +294,7 @@ function updateUserPlace(data) {
             $("#addUserPlace .formTitle").html("Thêm Loại Tài Khoản");
             $("#addUserPlace #SubmitPlace").html("Thêm");
             listUserPlace();
-            listOptionsUserPlace();
+            listOptionsUserPlace("#formAddUser #userPlace");
         },
         'text'
     );
@@ -292,11 +320,17 @@ function addUser(data) {
         'text'
     );
 }
-//18. Delete user
+//18. Delete or lock user
 function deleteUser(userName) {
     showConfirm({
         functionName: "processDelUser('" + userName + "')",
         message: 'Bạn có chắc chắn muốn xóa tài khoản "' + userName + '" không?',
+    });
+}
+function lockUser(userName) {
+    showConfirm({
+        functionName: "processLockUser('" + userName + "')",
+        message: 'Bạn có chắc chắn muốn khóa tài khoản "' + userName + '" không?',
     });
 }
 function processDelUser(userName) {
@@ -311,13 +345,25 @@ function processDelUser(userName) {
         'text'
     );
 }
+function processLockUser(userName) {
+    $.post(
+        "/process/lockUser.php",
+        { userName: userName },
+        function (response) {
+            $('#toast').html(response);
+            hideDialog('.dialog.dialogComfirm');
+            listUsers();
+        },
+        'text'
+    );
+}
 //19. Edit user
 function editUser(userName, fullName, type, place) {
     showDialog('#editUserDialog');
     $('#formEditUser #userName_').val(userName);
     $('#formEditUser #fullName_').val(fullName);
-    listOptionsUserType("#formEditUser #userType_",type);
-    listOptionsUserPlace("#formEditUser #userPlace_",place);
+    listOptionsUserType("#formEditUser #userType_", type);
+    listOptionsUserPlace("#formEditUser #userPlace_", place);
 }
 function updateUser(data) {
     $.post(

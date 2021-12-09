@@ -1,0 +1,20 @@
+#bolListTable{
+    tr{
+        td{
+            text-align: center;
+        }
+        td:nth-child(2){
+            text-align: left;
+        }
+        td:nth-child(4){
+            text-align: right;
+        }
+    }
+}
+#detailDialog{
+    .dialogContent{
+        .row{
+            padding-bottom: 15px;
+        }
+    }
+}
