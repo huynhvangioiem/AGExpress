@@ -1,12 +1,12 @@
 <?php
-    if(isset($_POST['action'])){
+    if(isset($_POST['action'])){ // check is set data
         include_once("connection.php");
-        try {
+        try { // try to query the bol in the database
             $get = mysqli_query($connect, "SELECT `AGEBoLID`,`AGEBoLDecs`, AGEPlaceName, `AGEBoLTransportFee`, `AGEBoLStatus` FROM `agebol` JOIN ageplace ON agebol.`AGEBoLEndPoint` = ageplace.AGEPlaceID") or die(mysqli_connect_error($connect));
             $res = "";
             include 'TLABarcode.php';
-            while($data=mysqli_fetch_array($get, MYSQLI_ASSOC)){
-                switch ($data['AGEBoLStatus']) {
+            while($data=mysqli_fetch_array($get, MYSQLI_ASSOC)){ //browse through each data
+                switch ($data['AGEBoLStatus']) { //set status
                     case 0:
                         $status = "Đã nhập kho gửi";
                         break;
@@ -33,7 +33,7 @@
                         break;
                     
                 };
-	            $bolID =  createBar128($data['AGEBoLID']);
+	            $bolID =  createBar128($data['AGEBoLID']); // call create barcode
                 $res .= '
                     <tr>
                         <td>'.$bolID.'</td>
@@ -48,6 +48,7 @@
                     </tr>
                 ';
             }
+            // return the component
             echo '
                 <div class="col-12 col-m-12 col-s-12">
                     <table id="bolListTable" class="stripe" style="width:100%">

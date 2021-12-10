@@ -97,7 +97,9 @@ III. Luồng xử lý:
       4.2 render bol list
 IV. GHi chú
    4.1 bổ sung thêm thông tin hướng dẫn phát
-
+   - User: bổ sung thêm tính năng unlock user
+V. Check error: 09/12/2021 in internet
+   - update user: không cập nhật được nơi làm việc
 
       
 

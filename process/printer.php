@@ -1,6 +1,7 @@
 <?php
-if (isset($_POST['action']) && isset($_POST['id'])) {
-    if (($_POST['action'] == "newbol") && ($_POST['id'] != "" && is_numeric($_POST['id']))) {
+if (isset($_POST['action']) && isset($_POST['id'])) { // check is set data
+    if (($_POST['action'] == "newbol") && ($_POST['id'] != "" && is_numeric($_POST['id']))) { 
+        //check action, if action = newbol then process and return component for newbol
         include_once("connection.php");
         include("TLABarcode.php");
         $get = mysqli_query($connect, "SELECT * FROM `agebol` JOIN ageplace ON agebol.`AGEBoLEndPoint` = ageplace.AGEPlaceID WHERE `AGEBoLID` = '" . $_POST['id'] . "'") or die(mysqli_connect_error($connect));
@@ -71,16 +72,15 @@ if (isset($_POST['action']) && isset($_POST['id'])) {
                 </div>
             </div>
         </div>
-        <!-- <div class="row footer"></div> -->
-    <?php
-    }else
-    if (($_POST['action'] == "bol") && ($_POST['id'] != "") && is_numeric($_POST['id']) ) {
+<?php
+    }else if (($_POST['action'] == "bol") && ($_POST['id'] != "") && is_numeric($_POST['id']) ) {
+        // else if action =  bol then process and return the component for bol
         include_once("connection.php");
         include("TLABarcode.php");
         $get = mysqli_query($connect, "SELECT * FROM `agebol` JOIN ageplace ON agebol.`AGEBoLEndPoint` = ageplace.AGEPlaceID WHERE `AGEBoLID` = '" . $_POST['id'] . "'") or die(mysqli_connect_error($connect));
         $data = mysqli_fetch_array($get, MYSQLI_ASSOC);
         $bolID =  createBar128($data['AGEBoLID']);
-    ?>
+?>
         <div class="row header">
             <div class="col-3 col-m-3 col-s-3 logo">
                 <img class="img-responsive" src="img/Logo4.jpg" alt="">
@@ -184,10 +184,10 @@ if (isset($_POST['action']) && isset($_POST['id'])) {
                 <h5><a href="https://huynhvangioiem.github.io/TLA_Library/">Development by TLAIT</a></h5>
             </div>
         </div>
-    <?php
-    }else
-    if ($_POST['action'] == "formbol") {
-    ?>
+<?php
+    }else if ($_POST['action'] == "formbol") {
+    // else if action =  formbol, return the component for formbol
+?>
         <div class="row header">
             <div class="col-3 col-m-3 col-s-3 logo">
                 <img class="img-responsive" src="img/Logo4.jpg" alt="">

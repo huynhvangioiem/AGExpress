@@ -1,8 +1,8 @@
 <?php
-if(isset($_POST['idUserType']) && isset($_POST['nameUserType'])){
-    if(is_numeric($_POST['idUserType']) && is_string($_POST['nameUserType']) && $_POST['nameUserType']!=""){
+if(isset($_POST['idUserType']) && isset($_POST['nameUserType'])){ //check is set input
+    if(is_numeric($_POST['idUserType']) && is_string($_POST['nameUserType']) && $_POST['nameUserType']!=""){ // check input value
         include_once("connection.php");
-        try {
+        try { // try to delete type and aler if success
             mysqli_query($connect, "DELETE FROM `ageusertype` WHERE `ageusertype`.`AGEUserTypeID` =".$_POST['idUserType']) or die(mysqli_connect_error($connect));
             echo "
                 <script>
@@ -17,7 +17,7 @@ if(isset($_POST['idUserType']) && isset($_POST['nameUserType'])){
                     })
                 </script> 
             ";
-        } catch (\Throwable $th) {
+        } catch (\Throwable $th) { // if wrong, aler error message
             echo "
                 <script>
                     $(document).ready(() => {

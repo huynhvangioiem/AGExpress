@@ -1,8 +1,8 @@
 <?php
-if (isset($_POST['bolID'])) {
+if (isset($_POST['bolID'])) { // check is set data input
     include_once("connection.php");
     include("TLABarcode.php");
-    try {
+    try { // try to query bol from database and return the component if success
         $get = mysqli_query($connect, "SELECT * FROM `agebol` JOIN ageplace ON agebol.`AGEBoLEndPoint` = ageplace.AGEPlaceID JOIN ageuser ON agebol.AGEUser = ageuser.AGEUserName WHERE `AGEBoLID` = '" . $_POST['bolID'] . "'") or die(mysqli_connect_error($connect));
         $data = mysqli_fetch_array($get, MYSQLI_ASSOC);
         $bolID =  createBar128($data['AGEBoLID']);
@@ -115,7 +115,7 @@ if (isset($_POST['bolID'])) {
         </div>
     </div>
 <?php
-    } catch (\Throwable $th) {
+    } catch (\Throwable $th) {//if wrong, don't any thing
     }
 }
 ?>

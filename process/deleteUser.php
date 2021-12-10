@@ -1,12 +1,12 @@
 <?php
-if(isset($_POST['userName'])){
-    if(is_string($_POST['userName'])&& $_POST['userName']!=''){
+if(isset($_POST['userName'])){ // check is set data
+    if(is_string($_POST['userName'])&& $_POST['userName']!=''){ //check input value
         include_once("connection.php");
-        try {
+        try { //try to find userTypeName
             $get = mysqli_query($connect, "SELECT ageusertype.AGEUserTypeName FROM ageuser JOIN ageusertype ON ageusertype.AGEUserTypeID = ageuser.AGEUserType  WHERE ageuser.AGEUserName = '".$_POST['userName']."'") or die(mysqli_connect_error($connect));
             $data=mysqli_fetch_array($get, MYSQLI_ASSOC);
-            if($data['AGEUserTypeName']!=="Admin"){
-                try {
+            if($data['AGEUserTypeName']!=="Admin"){ //if userTypeName is not Admin
+                try { //try to delete UserType and aler if success
                     mysqli_query($connect, "DELETE FROM `ageuser` WHERE `ageuser`.`AGEUserName` = '".$_POST["userName"]."'") or die(mysqli_connect_error($connect));
                     echo "
                         <script>
@@ -21,7 +21,7 @@ if(isset($_POST['userName'])){
                             })
                         </script> 
                     ";
-                } catch (\Throwable $th) {
+                } catch (\Throwable $th) { //if delete is wrong, aler error message
                     echo "
                         <script>
                             $(document).ready(() => {
@@ -36,7 +36,7 @@ if(isset($_POST['userName'])){
                         </script> 
                     ";
                 }
-            }else{
+            }else{ //else, if userTypeName is Admin, aler error message
                 echo "
                     <script>
                         $(document).ready(() => {
@@ -51,7 +51,7 @@ if(isset($_POST['userName'])){
                     </script> 
                 ";
             }
-        } catch (\Throwable $th) {
+        } catch (\Throwable $th) { //if the process find is wrong aler error message
             echo "
                 <script>
                     $(document).ready(() => {
@@ -66,14 +66,6 @@ if(isset($_POST['userName'])){
                 </script> 
             ";
         }
-
-
-
-
-
-
-
-        
     }
 }
 ?>

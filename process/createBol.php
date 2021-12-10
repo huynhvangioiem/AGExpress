@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	if(
+	if( //check is set input data
 		isset($_POST['senderTel']) && 
 		isset($_POST['senderName']) &&
 		isset($_POST['senderAddress']) &&
@@ -12,8 +12,8 @@
 		isset($_POST['deliveryForm']) &&
 		isset($_POST['transportFee']) &&
 		isset($_POST['payer'])
-	){
-		if(
+	){ 
+		if( //check input data
 			is_string($_POST['senderTel']) && $_POST['senderTel'] !="" && 
 			is_string($_POST['senderName']) && $_POST['senderName'] !="" && 
 			is_string($_POST['senderAddress']) && $_POST['senderAddress'] !="" && 
@@ -22,8 +22,9 @@
 			is_string($_POST['receiverAddress']) && $_POST['receiverAddress'] !=""
 		){
 			include_once("connection.php");
+			//call func to set ID
 			$IDBol = setID($connect);
-			try {
+			try { // try to insert data into database and aler if success
 				mysqli_query($connect, "INSERT INTO `agebol` (
 					`AGEBoLID`,
 					`AGEBoLSenderName`,
@@ -72,7 +73,7 @@
 						printer('".$IDBol."','newbol');
 					</script> 
 				";
-			} catch (\Throwable $th) {
+			} catch (\Throwable $th) { //if wrong, aler error message
 				echo "
 					<script>
 						$(document).ready(() => {
@@ -90,6 +91,7 @@
 		}
 
 	}
+	//function setID 
 	function setID($connect){
 		$get = mysqli_query($connect, "SELECT COUNT(*) as STT FROM `agebol` WHERE `AGEBoLID` LIKE '".date("y").date("m")."%'") or die(mysqli_connect_error($connect));
 		$data=mysqli_fetch_array($get, MYSQLI_ASSOC);
