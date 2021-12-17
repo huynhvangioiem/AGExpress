@@ -34,6 +34,9 @@
     &:hover {
         opacity: 0.8;
     }
+    &:disabled{
+        cursor: no-drop;
+    }
     &-rounded{
         border-radius: 10rem;
     }

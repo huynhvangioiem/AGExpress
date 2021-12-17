@@ -9,9 +9,9 @@ if (isset($_POST['action']) && isset($_POST['id'])) { // check is set data
         $bolID =  createBar128($data['AGEBoLID']);
 ?>
         <div class="row header">
-            <div class="col-3 col-m-3 col-s-3 logo"></div>
-            <div class="col-6 col-m-6 col-s-6"></div>
-            <div class="col-3 col-m-3 col-s-3 bardcode"><?php echo $bolID ?></div>
+            <div class="col-4 col-m-4 col-s-4 logo"></div>
+            <div class="col-4 col-m-4 col-s-4"></div>
+            <div class="col-4 col-m-4 col-s-4 bardcode"><?php echo $bolID ?></div>
         </div>
         <div class="row content">
             <div class="col-6 col-m-6 col-s-6 height30"></div>
@@ -82,14 +82,14 @@ if (isset($_POST['action']) && isset($_POST['id'])) { // check is set data
         $bolID =  createBar128($data['AGEBoLID']);
 ?>
         <div class="row header">
-            <div class="col-3 col-m-3 col-s-3 logo">
+            <div class="col-4 col-m-4 col-s-4 logo">
                 <img class="img-responsive" src="img/Logo4.jpg" alt="">
             </div>
-            <div class="col-6 col-m-6 col-s-6">
+            <div class="col-4 col-m-4 col-s-4">
                 <h2>AGEXPRESS</h2>
                 <h1>Vận Đơn</h1>
             </div>
-            <div class="col-3 col-m-3 col-s-3 bardcode"><?php echo $bolID ?></div>
+            <div class="col-4 col-m-4 col-s-4 bardcode"><?php echo $bolID ?></div>
         </div>
         <div class="row content">
             <div class="col-6 col-m-6 col-s-6 height30">
@@ -181,7 +181,7 @@ if (isset($_POST['action']) && isset($_POST['id'])) { // check is set data
                 <h5>Điện thoại: 0975779603</h5>
             </div>
             <div class="col-4 col-m-4 col-s-4">
-                <h5><a href="https://huynhvangioiem.github.io/TLA_Library/">Development by TLAIT</a></h5>
+                <h5><a href="https://huynhvangioiem.github.io/TLA_Library/">Develop by TLAIT</a></h5>
             </div>
         </div>
 <?php
@@ -189,14 +189,14 @@ if (isset($_POST['action']) && isset($_POST['id'])) { // check is set data
     // else if action =  formbol, return the component for formbol
 ?>
         <div class="row header">
-            <div class="col-3 col-m-3 col-s-3 logo">
+            <div class="col-4 col-m-4 col-s-4 logo">
                 <img class="img-responsive" src="img/Logo4.jpg" alt="">
             </div>
-            <div class="col-6 col-m-6 col-s-6">
+            <div class="col-4 col-m-4 col-s-4">
                 <h2>AGEXPRESS</h2>
                 <h1>Phiếu Gửi</h1>
             </div>
-            <div class="col-3 col-m-3 col-s-3 bardcode"></div>
+            <div class="col-4 col-m-4 col-s-4 bardcode"></div>
         </div>
         <div class="row content">
             <div class="col-6 col-m-6 col-s-6 height30">
@@ -233,7 +233,7 @@ if (isset($_POST['action']) && isset($_POST['id'])) { // check is set data
                 <h5>Điện thoại: 0975779603</h5>
             </div>
             <div class="col-4 col-m-4 col-s-4">
-                <h5><a href="https://huynhvangioiem.github.io/TLA_Library/">Development by TLAIT</a></h5>
+                <h5><a href="https://huynhvangioiem.github.io/TLA_Library/">Develop by TLAIT</a></h5>
             </div>
         </div>
 <?php

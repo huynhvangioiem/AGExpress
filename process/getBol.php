@@ -2,38 +2,16 @@
     if(isset($_POST['action'])){ // check is set data
         include_once("connection.php");
         try { // try to query the bol in the database
-            $get = mysqli_query($connect, "SELECT `AGEBoLID`,`AGEBoLDecs`, AGEPlaceName, `AGEBoLTransportFee`, `AGEBoLStatus` FROM `agebol` JOIN ageplace ON agebol.`AGEBoLEndPoint` = ageplace.AGEPlaceID") or die(mysqli_connect_error($connect));
+            $get = mysqli_query($connect, "SELECT `AGEBoLID`, `AGEBoLDecs`, b.AGEPlaceName, `AGEBoLEndPoint`, `AGEBoLTransportFee`, `AGEBoLStatus`, c.AGEPlace FROM agebol a JOIN ageplace b ON a.AGEBoLEndPoint = b.AGEPlaceID JOIN ageuser c ON a.AGEUser = c.AGEUserName") or die(mysqli_connect_error($connect));
             $res = "";
             include 'TLABarcode.php';
             while($data=mysqli_fetch_array($get, MYSQLI_ASSOC)){ //browse through each data
-                switch ($data['AGEBoLStatus']) { //set status
-                    case 0:
-                        $status = "Đã nhập kho gửi";
-                        break;
-                    case 1:
-                        $status = "Đang vận chuyển";
-                        break;
-                    case 2:
-                        $status = "Đã đến kho phát";
-                        break;
-                    case 3:
-                        $status = "Phát thành công";
-                        break;
-                    case 4:
-                        $status = "Chờ phát lại";
-                        break;
-                    case 5:
-                        $status = "Chuyển hoàn";
-                        break;
-                    case 6:
-                        $status = "Đã chuyển hoàn";
-                        break;
-                    case -1:
-                        $status = "Vô hiệu";
-                        break;
-                    
-                };
-	            $bolID =  createBar128($data['AGEBoLID']); // call create barcode
+                //set status
+                if($data['AGEBoLStatus']==$data['AGEPlace']) $status = "Đã nhập kho gửi";
+                else if($data['AGEBoLStatus']==$data['AGEBoLEndPoint']) $status = "Đang phát";
+                else $status = "Đang vận chuyển";
+                // call create barcode
+	            $bolID =  createBar128($data['AGEBoLID']); 
                 $res .= '
                     <tr>
                         <td>'.$bolID.'</td>

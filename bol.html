@@ -20,7 +20,6 @@
 
 	<script defer src="JS/dialog.js"></script> <!-- Dialog -->
 	<script defer src="JS/formValidator.js"></script> <!-- form Validator -->
-	<script defer src="JS/dataTables.js"></script> <!-- Call DataTables -->
 	<script defer src="JS/toast.js"></script>
 
 	<script defer src="JS/bol.js"></script>
@@ -56,6 +55,8 @@
 						<ul class="navbar-nav navbar-left">
 							<li class="nav-item"><a class="nav-link" href="/">Tổng Quan</a></li>
 							<li class="nav-item"><a class="nav-link" href="/bol.html">Vận Đơn</a></li>
+							<li class="nav-item"><a class="nav-link" href="/export.html">Xuất Kho</a></li>
+							<li class="nav-item"><a class="nav-link" href="/shipment.html">Chuyến Hàng</a></li>
 							<li class="nav-item"><a class="nav-link" href="#!">Báo Cáo</a></li>
 							<li class="nav-item"><a class="nav-link" href="/user.html">Tài Khoản</a></li>
 						</ul>
@@ -84,133 +85,255 @@
 		</div>
 		<!-- Footer -->
 		<div class="row footer">
-			<div class="container">
-				<div class="row footerContent">
-					<div class="col-3 col-m-3 col-s-12">
-						<h3>Copyright © 2022 AGEXPRESS</h3>
+      <div class="container">
+        <div class="row footerContent">
+          <div class="col-3 col-m-3 col-s-12">
+            <h3>Copyright © 2022 AGEXPRESS</h3>
+          </div>
+          <div class="col-6 col-m-6 col-s-12">
+            <h3>Công Ty TNHH AGEXPRESS</h3>
+            <h4>Số 94, Triệu Thị Trinh, Phường Bình Khánh, Long Xuyên, An Giang</h4>
+          </div>
+          <div class="col-3 col-m-3 col-s-12">
+            <h3><a href="https://huynhvangioiem.github.io/TLA_Library/">Develop  by TLAIT</a></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+	<div class="dialog" id="createBolDialog">
+		<div class="container">
+			<div class="row dialogHeader">
+				<div class="col-12 col-m-12 col-s-12">
+					<h1 class="title">Tạo Vận Đơn</h1>
+				</div>
+			</div>
+			<form method="post" class="formCreateBol" id="formCreateBol" action="">
+				<div class="row dialogContent">
+					<div class="col-6 col-m-6 col-s-12">
+						<div class="form-group">
+							<h3>Thông Tin Người Gửi</h3>
+						</div>
+						<div class="form-group">
+							<input id="senderTel" class="form-control" type="text" name="senderTel"
+								placeholder="Số điện thoại người gửi">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="senderName" class="form-control" type="text" name="senderName"
+								placeholder="Họ tên người gửi">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="senderAddress" class="form-control" type="text" name="senderAddress"
+								placeholder="Địa chỉ người gửi">
+							<div class="form-message"></div>
+						</div>
 					</div>
 					<div class="col-6 col-m-6 col-s-12">
-						<h3>Công Ty TNHH AGEXPRESS</h3>
-						<h4>Số 94, Triệu Thị Trinh, Phường Bình Khánh, Long Xuyên, An Giang</h4>
+						<div class="form-group">
+							<h3>Thông Tin Người Nhận</h3>
+						</div>
+						<div class="form-group">
+							<input id="receiverTel" class="form-control" type="text" name="receiverTel"
+								placeholder="Số điện thoại người nhận">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="receiverName" class="form-control" type="text" name="receiverName"
+								placeholder="Họ tên người nhận">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="receiverAddress" class="form-control" type="text" name="receiverAddress"
+								placeholder="Địa chỉ người nhận">
+							<div class="form-message"></div>
+						</div>
 					</div>
-					<div class="col-3 col-m-3 col-s-12">
-						<h3><a href="https://huynhvangioiem.github.io/TLA_Library/">Development by TLAIT</a></h3>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="dialog" id="createBolDialog">
-			<div class="container">
-				<div class="row dialogHeader">
 					<div class="col-12 col-m-12 col-s-12">
-						<h1 class="title">Tạo Vận Đơn</h1>
+						<div class="form-group">
+							<h3>Thông Tin Đơn Hàng</h3>
+						</div>
+					</div>
+					<div class="col-6 col-m-6 col-s-12">
+						<div class="form-group">
+							<select id="endPoint" class="form-control" name="endPoint"></select>
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="description" class="form-control" type="text" name="description"
+								placeholder="Mô tả hàng hóa">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="weight" class="form-control" type="number" min="0" name="weight"
+								placeholder="Trọng lượng (kg)">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="deliveryWay" class="form-control" type="text" name="deliveryWay"
+								placeholder="Hướng dẫn giao hàng">
+							<div class="form-message"></div>
+						</div>
+						
+					</div>
+					<div class="col-6 col-m-6 col-s-12">
+						<div class="form-group">
+							<input id="collection" class="form-control" type="number" min="0" name="collection"
+								placeholder="Số tiền thu hộ (nếu có)">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="transportFee" class="form-control" type="number" min="0" name="transportFee"
+								placeholder="Phí vận chuyển">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-check">
+							<div class="form-group form-control">
+								<input id="payer" class="form-check-input" type="checkbox" name="payer" value="1">
+								<label for="payer" class="form-check-label">Người nhận trả phí vận chuyển</label>
+							</div>
+						</div>
+						<div class="form-check">
+							<div class="form-group form-control">
+								<input id="deliveryForm" class="form-check-input" type="checkbox"
+									name="deliveryForm" value="1">
+								<label for="deliveryForm" class="form-check-label">Đơn hàng tự đến lấy</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row dialogFooter">
+					<button class="btn btn-info" type="button" onclick="printer(null,'formbol')">in mẫu phiếu gửi</button>
+					<button class="btn btn-warning" type="reset">Nhập lại</button>
+					<button class="btn btn-success" type="submit">Tạo Vận Đơn</button>
+					<button class="btn btn-danger" type="button"
+						onclick="hideDialog('#createBolDialog')">Hủy</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="dialog" id="detailDialog">
+
+	</div>
+	<div class="dialog" id="editBolDialog">
+		<div class="container">
+			<div class="row dialogHeader">
+				<div class="col-12 col-m-12 col-s-12">
+					<h1 class="title">Chỉnh Sữa Thông Tin Đơn Hàng</h1>
+				</div>
+			</div>
+			<form method="post" class="formEditBol" id="formEditBol" action="">
+				<div class="row dialogContent">
+					<div class="col-12 col-m-12 col-s-12">
+						<div class="form-group">
+							<input id="bolID" readonly class="form-control" type="text" name="bolID" placeholder="Mã đơn">
+							<div class="form-message"></div>
+						</div>
+					</div>
+					<div class="col-6 col-m-6 col-s-12">
+						<div class="form-group">
+							<h3>Thông Tin Người Gửi</h3>
+						</div>
+						<div class="form-group">
+							<input id="senderTel_" class="form-control" type="text" name="senderTel_"
+								placeholder="Số điện thoại người gửi">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="senderName_" class="form-control" type="text" name="senderName_"
+								placeholder="Họ tên người gửi">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="senderAddress_" class="form-control" type="text" name="senderAddress_"
+								placeholder="Địa chỉ người gửi">
+							<div class="form-message"></div>
+						</div>
+					</div>
+					<div class="col-6 col-m-6 col-s-12">
+						<div class="form-group">
+							<h3>Thông Tin Người Nhận</h3>
+						</div>
+						<div class="form-group">
+							<input id="receiverTel_" class="form-control" type="text" name="receiverTel_"
+								placeholder="Số điện thoại người nhận">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="receiverName_" class="form-control" type="text" name="receiverName_"
+								placeholder="Họ tên người nhận">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="receiverAddress_" class="form-control" type="text" name="receiverAddress_"
+								placeholder="Địa chỉ người nhận">
+							<div class="form-message"></div>
+						</div>
+					</div>
+					<div class="col-12 col-m-12 col-s-12">
+						<div class="form-group">
+							<h3>Thông Tin Đơn Hàng</h3>
+						</div>
+					</div>
+					<div class="col-6 col-m-6 col-s-12">
+						<div class="form-group">
+							<select id="endPoint_" class="form-control" name="endPoint_"></select>
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="description_" class="form-control" type="text" name="description_"
+								placeholder="Mô tả hàng hóa">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="weight_" class="form-control" type="number" min="0" name="weight_"
+								placeholder="Trọng lượng (kg)">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="deliveryWay_" class="form-control" type="text" name="deliveryWay_"
+								placeholder="Hướng dẫn giao hàng">
+							<div class="form-message"></div>
+						</div>
+						
+					</div>
+					<div class="col-6 col-m-6 col-s-12">
+						<div class="form-group">
+							<input id="collection_" class="form-control" type="number" min="0" name="collection_"
+								placeholder="Số tiền thu hộ (nếu có)">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="transportFee_" class="form-control" type="number" min="0" name="transportFee_"
+								placeholder="Phí vận chuyển">
+							<div class="form-message"></div>
+						</div>
+						<div class="form-check">
+							<div class="form-group form-control">
+								<input id="payer_" class="form-check-input" type="checkbox" name="payer_" value="1">
+								<label for="payer_" class="form-check-label">Người nhận trả phí vận chuyển</label>
+							</div>
+						</div>
+						<div class="form-check">
+							<div class="form-group form-control">
+								<input id="deliveryForm_" class="form-check-input" type="checkbox" name="deliveryForm_" value="1">
+								<label for="deliveryForm_" class="form-check-label">Đơn hàng tự đến lấy</label>
+							</div>
+						</div>
 					</div>
 				</div>
-				<form method="post" class="formCreateBol" id="formCreateBol" action="">
-					<div class="row dialogContent">
-						<div class="col-6 col-m-6 col-s-12">
-							<div class="form-group">
-								<h3>Thông Tin Người Gửi</h3>
-							</div>
-							<div class="form-group">
-								<input id="senderTel" class="form-control" type="text" name="senderTel"
-									placeholder="Số điện thoại người gửi">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="senderName" class="form-control" type="text" name="senderName"
-									placeholder="Họ tên người gửi">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="senderAddress" class="form-control" type="text" name="senderAddress"
-									placeholder="Địa chỉ người gửi">
-								<div class="form-message"></div>
-							</div>
-						</div>
-						<div class="col-6 col-m-6 col-s-12">
-							<div class="form-group">
-								<h3>Thông Tin Người Nhận</h3>
-							</div>
-							<div class="form-group">
-								<input id="receiverTel" class="form-control" type="text" name="receiverTel"
-									placeholder="Số điện thoại người nhận">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="receiverName" class="form-control" type="text" name="receiverName"
-									placeholder="Họ tên người nhận">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="receiverAddress" class="form-control" type="text" name="receiverAddress"
-									placeholder="Địa chỉ người nhận">
-								<div class="form-message"></div>
-							</div>
-						</div>
-						<div class="col-12 col-m-12 col-s-12">
-							<div class="form-group">
-								<h3>Thông Tin Đơn Hàng</h3>
-							</div>
-						</div>
-						<div class="col-6 col-m-6 col-s-12">
-							<div class="form-group">
-								<select id="endPoint" class="form-control" name="endPoint"></select>
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="description" class="form-control" type="text" name="description"
-									placeholder="Mô tả hàng hóa">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="weight" class="form-control" type="number" min="0" name="weight"
-									placeholder="Trọng lượng (kg)">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-check">
-								<div class="form-group form-control">
-									<input id="deliveryForm" class="form-check-input" type="checkbox"
-										name="deliveryForm" value="1">
-									<label for="deliveryForm" class="form-check-label">Đơn hàng tự đến lấy</label>
-								</div>
-							</div>
-						</div>
-						<div class="col-6 col-m-6 col-s-12">
-							<div class="form-group">
-								<input id="collection" class="form-control" type="number" min="0" name="collection"
-									placeholder="Số tiền thu hộ (nếu có)">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="transportFee" class="form-control" type="number" min="0" name="transportFee"
-									placeholder="Phí vận chuyển">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-check">
-								<div class="form-group form-control">
-									<input id="payer" class="form-check-input" type="checkbox" name="payer" value="1">
-									<label for="payer" class="form-check-label">Người nhận trả phí vận chuyển</label>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row dialogFooter">
-						<button class="btn btn-info" type="button" onclick="printer(null,'formbol')">in mẫu phiếu gửi</button>
-						<button class="btn btn-warning" type="reset">Nhập lại</button>
-						<button class="btn btn-success" type="submit">Tạo Vận Đơn Đơn</button>
-						<button class="btn btn-danger" type="button"
-							onclick="hideDialog('#createBolDialog')">Hủy</button>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="dialog" id="detailDialog">
-
+				<div class="row dialogFooter">
+					<button class="btn btn-success" type="submit">Cập Nhật</button>
+					<button class="btn btn-danger" type="button" onclick="hideDialog('#editBolDialog')">Hủy</button>
+				</div>
+			</form>
 		</div>
 	</div>
 	<!-- Toast Msg -->
 	<div id="toast"></div>
+	<!-- Dialog Confirm -->
+  <div class="dialog dialogComfirm"></div>
 </body>
 
 </html>

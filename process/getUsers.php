@@ -6,6 +6,7 @@
             $index = 1;
             $res = "";
             while($data=mysqli_fetch_array($get, MYSQLI_ASSOC)){
+                $classLock = '<button type="button" class="btn btn-warning" onclick="lockUser(\''.$data["AGEUserName"].'\')"><i class="fas fa-lock"></i></button>';
                 switch ($data['AGEUserStatus']) {
                     case 0:
                         $status = "Chưa kích hoạt";
@@ -15,6 +16,7 @@
                         break;
                     case -1:
                         $status = "Vô hiệu";
+                        $classLock = '<button type="button" class="btn btn-warning" onclick="unlockUser(\''.$data["AGEUserName"].'\')"><i class="fas fa-unlock"></i></button>';
                         break;
                     
                 };
@@ -27,7 +29,7 @@
                         <td>'.$status.'</td>
                         <td>
                             <button type="button" class="btn btn-info" onclick="editUser(\''.$data["AGEUserName"].'\', \''.$data["AGEUserFullName"].'\', '.$data["AGEUserTypeID"].', '.$data["AGEPlaceID"].')"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-warning" onclick="lockUser(\''.$data["AGEUserName"].'\')"><i class="fas fa-lock"></i></button>
+                            '.$classLock.'
                             <button type="button" class="btn btn-danger" onclick="deleteUser(\''.$data["AGEUserName"].'\')"><i class="far fa-trash-alt"></i></button>
                         </td>
                     </tr>

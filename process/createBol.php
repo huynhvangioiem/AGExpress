@@ -25,6 +25,8 @@
 			//call func to set ID
 			$IDBol = setID($connect);
 			try { // try to insert data into database and aler if success
+				$getPlace = mysqli_query($connect, "SELECT * FROM `ageuser` WHERE `AGEUserName` = '".$_SESSION['userName']."'") or die(mysqli_connect_error($connect));
+				$dataPlace = mysqli_fetch_array($getPlace, MYSQLI_ASSOC);
 				mysqli_query($connect, "INSERT INTO `agebol` (
 					`AGEBoLID`,
 					`AGEBoLSenderName`,
@@ -41,7 +43,8 @@
 					`AGEUser`,
 					`AGEBoLDecs`,
 					`AGEBoLWeight`,
-					`AGEBoLEndPoint` 
+					`AGEBoLEndPoint`,
+					`AGEBoLDeliveryWay`
 				) VALUES (
 					'".$IDBol."',
 					'".$_POST['senderName']."',
@@ -54,11 +57,13 @@
 					'".$_POST['transportFee']."',
 					'".$_POST['collection']."',
 					'".$_POST['payer']."',
-					'0',
+					'".$dataPlace['AGEPlace']."',
 					'".$_SESSION['userName']."',
 					'".$_POST['description']."',
 					'".$_POST['weight']."',
-					'".$_POST['endPoint']."')") or die(mysqli_connect_error($connect));
+					'".$_POST['endPoint']."',
+					'".$_POST['deliveryWay']."'
+					)") or die(mysqli_connect_error($connect));
 				echo "
 					<script>
 						$(document).ready(() => {
@@ -93,9 +98,9 @@
 	}
 	//function setID 
 	function setID($connect){
-		$get = mysqli_query($connect, "SELECT COUNT(*) as STT FROM `agebol` WHERE `AGEBoLID` LIKE '".date("y").date("m")."%'") or die(mysqli_connect_error($connect));
+		$get = mysqli_query($connect, "SELECT COUNT(*) as STT FROM `agebol` WHERE `AGEBoLID` LIKE '".date("y").date("m").date("d")."%'") or die(mysqli_connect_error($connect));
 		$data=mysqli_fetch_array($get, MYSQLI_ASSOC);
-		$ID = date("y").date("m").$data['STT']+1;
+		$ID = date("y").date("m").date("d").$data['STT']+1;
 		return $ID;
 	}
 ?>

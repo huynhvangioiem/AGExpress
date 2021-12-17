@@ -16,11 +16,10 @@
 
 	<link rel="stylesheet" href="CSS/styles.css"> <!-- Styles -->
 	<link rel="stylesheet" href="CSS/style.css"> <!-- Style -->
-	<!-- <link rel="stylesheet" href="CSS/bol.css"> bol Style -->
+	<link rel="stylesheet" href="CSS/export.css"><!--  export Style -->
 
-	<!-- <script defer src="JS/dialog.js"></script> Dialog -->
-	<!-- <script defer src="JS/formValidator.js"></script> form Validator -->
-	<!-- <script defer src="JS/dataTables.js"></script> Call DataTables -->
+	<script defer src="JS/dialog.js"></script><!--  Dialog -->
+	<script defer src="JS/formValidator.js"></script> <!-- form Validator -->
 	<script defer src="JS/toast.js"></script>
 
 	<script defer src="JS/export.js"></script>
@@ -56,6 +55,8 @@
 						<ul class="navbar-nav navbar-left">
 							<li class="nav-item"><a class="nav-link" href="/">Tổng Quan</a></li>
 							<li class="nav-item"><a class="nav-link" href="/bol.html">Vận Đơn</a></li>
+							<li class="nav-item"><a class="nav-link" href="/export.html">Xuất Kho</a></li>
+							<li class="nav-item"><a class="nav-link" href="/shipment.html">Chuyến Hàng</a></li>
 							<li class="nav-item"><a class="nav-link" href="#!">Báo Cáo</a></li>
 							<li class="nav-item"><a class="nav-link" href="/user.html">Tài Khoản</a></li>
 						</ul>
@@ -73,11 +74,11 @@
 					<div class="col-9 col-m-8 col-s-12 mainContent">
 						<div class="row">
 							<div class="col-6 col-m-6 col-s-12 col-o-6 action">
-								<button class="btn btn-success" id="createBol" type="button"><i class="fas fa-plus"></i>Tạo phiếu
+								<button class="btn btn-success" id="createExport" type="button"><i class="fas fa-plus"></i>Tạo phiếu
 									xuất</button>
 							</div>
 						</div>
-						<div class="row bolList"></div>
+						<div class="row exportList"></div>
 					</div>
 				</div>
 			</div>
@@ -94,121 +95,111 @@
 						<h4>Số 94, Triệu Thị Trinh, Phường Bình Khánh, Long Xuyên, An Giang</h4>
 					</div>
 					<div class="col-3 col-m-3 col-s-12">
-						<h3><a href="https://huynhvangioiem.github.io/TLA_Library/">Development by TLAIT</a></h3>
+						<h3><a href="https://huynhvangioiem.github.io/TLA_Library/">Develop by TLAIT</a></h3>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- <div class="dialog" id="createBolDialog">
-			<div class="container">
-				<div class="row dialogHeader">
+	</div>
+
+	<div class="dialog" id="createExportDialog">
+		<div class="container">
+			<div class="row dialogHeader">
+				<div class="col-12 col-m-12 col-s-12">
+					<h1 class="title">Tạo Phiếu Xuất</h1>
+				</div>
+			</div>
+			<form method="post" class="formCreateExport" id="formCreateExport" action="">
+				<div class="row dialogContent">
 					<div class="col-12 col-m-12 col-s-12">
-						<h1 class="title">Tạo Vận Đơn</h1>
+						<div class="form-group">
+							<h3>Thời gian xuất kho:</h3>
+						</div>
+					</div>
+					<div class="col-12 col-m-12 col-s-12">
+						<div class="form-group">
+							<input id="exportID" class="form-control" type="text" name="exportID" hidden>
+							<div class="form-message"></div>
+						</div>
+						<div class="form-group">
+							<input id="timeExport" class="form-control" type="datetime-local" name="timeExport">
+							<div class="form-message"></div>
+						</div>
+					</div>
+					<div class="col-12 col-m-12 col-s-12">
+						<div class="form-group">
+							<h3>Chuyến xe vận chuyển:</h3>
+						</div>
+					</div>
+					<div class="col-12 col-m-12 col-s-12">
+						<div class="form-group">
+							<select id="shipment" class="form-control" name="shipment"></select>
+							<div class="form-message"></div>
+						</div>
+					</div>
+					<div class="col-12 col-m-12 col-s-12">
+						<div class="form-group">
+							<h3>Kho nhận:</h3>
+						</div>
+					</div>
+					<div class="col-12 col-m-12 col-s-12">
+						<div class="form-group">
+							<select id="destination" class="form-control" name="destination"></select>
+							<div class="form-message"></div>
+						</div>
 					</div>
 				</div>
-				<form method="post" class="formCreateBol" id="formCreateBol" action="">
-					<div class="row dialogContent">
-						<div class="col-6 col-m-6 col-s-12">
-							<div class="form-group">
-								<h3>Thông Tin Người Gửi</h3>
-							</div>
-							<div class="form-group">
-								<input id="senderTel" class="form-control" type="text" name="senderTel"
-									placeholder="Số điện thoại người gửi">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="senderName" class="form-control" type="text" name="senderName"
-									placeholder="Họ tên người gửi">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="senderAddress" class="form-control" type="text" name="senderAddress"
-									placeholder="Địa chỉ người gửi">
-								<div class="form-message"></div>
-							</div>
-						</div>
-						<div class="col-6 col-m-6 col-s-12">
-							<div class="form-group">
-								<h3>Thông Tin Người Nhận</h3>
-							</div>
-							<div class="form-group">
-								<input id="receiverTel" class="form-control" type="text" name="receiverTel"
-									placeholder="Số điện thoại người nhận">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="receiverName" class="form-control" type="text" name="receiverName"
-									placeholder="Họ tên người nhận">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="receiverAddress" class="form-control" type="text" name="receiverAddress"
-									placeholder="Địa chỉ người nhận">
-								<div class="form-message"></div>
-							</div>
-						</div>
-						<div class="col-12 col-m-12 col-s-12">
-							<div class="form-group">
-								<h3>Thông Tin Đơn Hàng</h3>
-							</div>
-						</div>
-						<div class="col-6 col-m-6 col-s-12">
-							<div class="form-group">
-								<select id="endPoint" class="form-control" name="endPoint"></select>
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="description" class="form-control" type="text" name="description"
-									placeholder="Mô tả hàng hóa">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="weight" class="form-control" type="number" min="0" name="weight"
-									placeholder="Trọng lượng (kg)">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-check">
-								<div class="form-group form-control">
-									<input id="deliveryForm" class="form-check-input" type="checkbox"
-										name="deliveryForm" value="1">
-									<label for="deliveryForm" class="form-check-label">Đơn hàng tự đến lấy</label>
-								</div>
-							</div>
-						</div>
-						<div class="col-6 col-m-6 col-s-12">
-							<div class="form-group">
-								<input id="collection" class="form-control" type="number" min="0" name="collection"
-									placeholder="Số tiền thu hộ (nếu có)">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-group">
-								<input id="transportFee" class="form-control" type="number" min="0" name="transportFee"
-									placeholder="Phí vận chuyển">
-								<div class="form-message"></div>
-							</div>
-							<div class="form-check">
-								<div class="form-group form-control">
-									<input id="payer" class="form-check-input" type="checkbox" name="payer" value="1">
-									<label for="payer" class="form-check-label">Người nhận trả phí vận chuyển</label>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row dialogFooter">
-						<button class="btn btn-info" type="button" onclick="printer(null,'formbol')">in mẫu phiếu gửi</button>
-						<button class="btn btn-warning" type="reset">Nhập lại</button>
-						<button class="btn btn-success" type="submit">Tạo Vận Đơn Đơn</button>
-						<button class="btn btn-danger" type="button"
-							onclick="hideDialog('#createBolDialog')">Hủy</button>
-					</div>
-				</form>
-			</div>
-		</div> -->
-		<!-- <div class="dialog" id="detailDialog">
-
-		</div> -->
+				<div class="row dialogFooter">
+					<button class="btn btn-warning" id="btnReset" type="reset">Nhập lại</button>
+					<button class="btn btn-success" id="btnSubmit" type="submit">Tạo phiếu xuất</button>
+					<button class="btn btn-danger" type="button" onclick="resetDialogCreate()">Hủy</button>
+				</div>
+			</form>
+		</div>
 	</div>
+
+	<div class="dialog" id="addBolToExportDialog">
+		<div class="container">
+			<div class="row dialogHeader">
+				<div class="col-12 col-m-12 col-s-12">
+					<h1 class="title"></h1>
+				</div>
+			</div>
+			<div class="row dialogContent">
+				<div class="col-12 col-m-12 col-s-12" id="info"></div>
+				<div class="col-12 col-m-12 col-s-12 formAdd">
+					<form method="post" class="formAddBolToExport" id="formAddBolToExport" action="">
+						<div class="row">
+							<div class="col-12 col-m-12 col-s-12">
+								<div class="form-group">
+									<input id="bolID" class="form-control" type="text" name="bolID"
+										placeholder="Nhập mã đơn cần thêm và nhấn Enter để thêm">
+									<div class="form-message"></div>
+								</div>
+								<div class="form-group" hidden>
+									<input id="exportID" class="form-control" type="text" name="exportID">
+									<button class="btn btn-success" id="btnSubmit" type="submit">Thêm</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-12 col-m-12 col-s-12 title">
+					<h3>DANH SÁCH ĐƠN HÀNG CẦN XUẤT</h3>
+				</div>
+				<div class="col-12 col-m-12 col-s-12" id="listBol"></div>
+			</div>
+			<div class="row" id="sign">
+				<div class="col-6 col-m-6 col-s-6">......./..../..../....</div>
+				<div class="col-6 col-m-6 col-s-6">......./..../..../....</div>
+				<div class="col-6 col-m-6 col-s-6">Xác Nhận Của ........</div>
+				<div class="col-6 col-m-6 col-s-6">Nhân Viên Xuất</div>
+				<div class="col-6 col-m-6 col-s-6">Ký tên, đóng dấu</div>
+				<div class="col-6 col-m-6 col-s-6">Ký tên, đóng dấu</div>
+			</div>
+		</div>
+	</div>
+	<div class="dialog dialogComfirm"></div>
 	<!-- Toast Msg -->
 	<div id="toast"></div>
 </body>

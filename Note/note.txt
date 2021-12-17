@@ -95,11 +95,52 @@ III. Luồng xử lý:
    4. bol
       x4.1 Create bol
       4.2 render bol list
+   5. Shipment
+      x5.1 create shipment
+      x5.2 edit shipment
+      x5.3 cancel shipment
+      5.4 start shipment
+   6. Export
+      x6.1 Create export
+      x6.2 Edit export
+      x6.3 cancel export
+      x6.4 add bol to export 
+      x6.5 export
+
+
 IV. GHi chú
-   4.1 bổ sung thêm thông tin hướng dẫn phát
-   - User: bổ sung thêm tính năng unlock user
-V. Check error: 09/12/2021 in internet
-   - update user: không cập nhật được nơi làm việc
+V. Check error: 14/12/2021
+   0. Login and logout and update password: all success
+   1. Type: 
+      - add: success
+      - edit: success
+      - delete: success
+   2. Place
+      - add: success
+      - edit: success
+      - delete: success
+   3. User
+      - add: success
+      - edit: success
+      - delete: success
+      - lock: success
+      - unlock: success
+   4. Shipment
+      - create: success
+      - edit: success
+      - cancel: success
+   5. bol
+      - Print formbol: ok, checking late
+      - add: success
+      - detail: success
+      - print bol: ok, checking late
+      - edit: success, checking late
+      - print label: undefined. comming soon...
+      - cancel: undefined. comming soon...
+   6. Export
+      - create: 
 
-      
-
+V. Check error: 17/12/2021
+   5. Bol:
+      - Print newbol: hướng dẫn phát chưa được chỉnh sữa
+   6. Export

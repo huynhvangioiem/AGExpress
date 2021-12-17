@@ -1,0 +1,93 @@
+#exportListTable{
+    tr{
+        td{
+            text-align: center;
+        }
+    }
+}
+#addBolToExportDialog{
+    .dialogContent{
+        #info{
+            margin-bottom: 15px;
+            .barcode{
+                margin-bottom: 5px;
+            }
+        }
+        .title{
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    }
+    #sign{
+        display: none;
+    }
+}
+#listBolTable{
+    tr{
+        td{
+            text-align: center;
+        }
+        td:nth-child(2){
+            text-align: left;
+        }
+        td:nth-child(4){
+            text-align: right;
+        }
+    }
+}
+@media print {
+    @page {
+        margin: 1cm;
+        size: A4 portrait;
+    }
+    body {
+        border: 1px solid black;
+        background-color: #fff;
+        .container-fluid{
+            display: none !important;
+        }
+        #addBolToExportDialog{
+            position: relative;
+            background-color: #fff;
+            .container{
+                box-shadow: unset !important;
+            }
+            .dialogHeader{
+                .title{
+                    visibility: hidden;
+                    display: grid;
+                    &::after{
+                        content: 'Thông Tin Phiếu Xuất Kho';
+                        visibility: visible;
+                    }
+                }
+            }
+            .formAdd{
+                display: none;
+            }
+            #listBolTable_length{
+                display: none !important;
+            }
+            #listBolTable_filter{
+                display: none !important;
+            }
+            #listBolTable_paginate{
+                display: none !important;
+            }
+            #listBolTable{
+                th:nth-child(6),td:nth-child(6){
+                    display: none !important;
+                }
+            }
+            .dialogFooter{
+                display: none !important; 
+            }
+            #sign{
+                display: flex;
+                margin-top: 10px;
+                margin-bottom: 3cm;
+                text-align: center;                
+            }
+        }
+    }
+}

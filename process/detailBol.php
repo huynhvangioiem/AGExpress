@@ -67,50 +67,44 @@ if (isset($_POST['bolID'])) { // check is set data input
                     <div class="col-4 col-m-4 col-s-4">Hình thức phát:</div>
                     <div class="col-8 col-m-8 col-s-8"><?php echo $data['AGEBoLDeliveryForm'] == 1 ? "Người nhận tự đến lấy" : "Phát đến địa chỉ nhận" ?></div>
                     <div class="col-4 col-m-4 col-s-4">Hướng dẫn phát:</div>
-                    <div class="col-8 col-m-8 col-s-8"><?php echo "Bổ sung hướng dẫn phát"?></div>
+                    <div class="col-8 col-m-8 col-s-8"><?php echo $data['AGEBoLDeliveryWay']?></div>
                     <div class="col-4 col-m-4 col-s-4">Thu hộ:</div>
-                    <div class="col-8 col-m-8 col-s-8"><?php echo number_format($data['AGEBoLCollection'])?></div>
+                    <div class="col-8 col-m-8 col-s-8"><?php echo number_format($data['AGEBoLCollection'])?> VNĐ</div>
                     <div class="col-4 col-m-4 col-s-4">Nhân viên tạo:</div>
                     <div class="col-8 col-m-8 col-s-8"><?php echo $data['AGEUserFullName']?></div>
                     <div class="col-4 col-m-4 col-s-4">Trạng thái:</div>
                     <div class="col-8 col-m-8 col-s-8">
                         <?php 
-                            switch ($data['AGEBoLStatus']) {
-                                case 0:
-                                    echo "Đã nhập kho gửi";
-                                    break;
-                                case 1:
-                                    echo "Đang vận chuyển";
-                                    break;
-                                case 2:
-                                    echo "Đã đến kho phát";
-                                    break;
-                                case 3:
-                                    echo "Phát thành công";
-                                    break;
-                                case 4:
-                                    echo "Chờ phát lại";
-                                    break;
-                                case 5:
-                                    echo "Chuyển hoàn";
-                                    break;
-                                case 6:
-                                    echo "Đã chuyển hoàn";
-                                    break;
-                                case -1:
-                                    echo "Vô hiệu";
-                                    break;
-                                
-                            };
+                            if($data['AGEBoLStatus']==$data['AGEPlace']) $status = "Đã nhập kho gửi";
+                            else if($data['AGEBoLStatus']==$data['AGEBoLEndPoint']) $status = "Đang phát";
+                            else $status = "Đang vận chuyển";
+                            echo $status;
                         ?>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row dialogFooter">
-            <button class="btn btn-info" type="button">Chỉnh Sửa</button>
+            <button class="btn btn-info" type="button" onclick="editBol(
+                '<?php echo $data['AGEBoLID']?>',
+                '<?php echo $data['AGEBoLSenderName']?>',
+                '<?php echo $data['AGEBoLSenderSdt']?>',
+                '<?php echo $data['AGEBoLSenderAddress']?>',
+                '<?php echo $data['AGEBoLReceiverName']?>',
+                '<?php echo $data['AGEBoLReceiverSdt']?>',
+                '<?php echo $data['AGEBoLReceiverAddress']?>',
+                '<?php echo $data['AGEBoLDeliveryForm']?>',
+                '<?php echo $data['AGEBoLTransportFee']?>',
+                '<?php echo $data['AGEBoLCollection']?>',
+                '<?php echo $data['AGEBoLPayer']?>',
+                '<?php echo $data['AGEBoLDecs']?>',
+                '<?php echo $data['AGEBoLWeight']?>',
+                '<?php echo $data['AGEBoLEndPoint']?>',
+                '<?php echo $data['AGEBoLDeliveryWay']?>',
+            )">Chỉnh Sửa</button>
             <button class="btn btn-success" type="button" onclick="printer('<?php echo $data['AGEBoLID']?>', 'bol')">In Phiếu</button>
             <button class="btn btn-success" type="button">In label</button>
+            <button class="btn btn-warning" type="button" onclick="cancel('<?php echo $data['AGEBoLID']?>')">Hủy Đơn</button>
             <button class="btn btn-danger" type="button" onclick="hideDialog('#detailDialog')">Đóng</button>
         </div>
     </div>

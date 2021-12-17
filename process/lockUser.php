@@ -7,20 +7,39 @@ if(isset($_POST['userName'])){
             $data=mysqli_fetch_array($get, MYSQLI_ASSOC);
             if($data['AGEUserTypeName']!=="Admin"){
                 try {
-                    mysqli_query($connect, "UPDATE `ageuser` SET `AGEUserStatus`=-1 WHERE `AGEUserName` = '".$_POST['userName']."'") or die(mysqli_connect_error($connect));
-                    echo "
-                        <script>
-                            $(document).ready(() => {
-                                toast({
-                                    title: 'Thành Công!',
-                                    message: 'Đã vô hiệu tài khoản ".$_POST["userName"].".',
-                                    style: 'success-outline',
-                                    duration: 5000,
-                                    iconType: 'success',
-                                });
-                            })
-                        </script> 
-                    ";
+                    if( isset($_POST['action']) ){
+                        if($_POST['action'] == "unlock") {
+                            mysqli_query($connect, "UPDATE `ageuser` SET `AGEUserStatus`=0 WHERE `AGEUserName` = '".$_POST['userName']."'") or die(mysqli_connect_error($connect));
+                            echo "
+                                <script>
+                                    $(document).ready(() => {
+                                        toast({
+                                            title: 'Thành Công!',
+                                            message: 'Đã mở khóa tài khoản ".$_POST["userName"].".',
+                                            style: 'success-outline',
+                                            duration: 5000,
+                                            iconType: 'success',
+                                        });
+                                    })
+                                </script> 
+                            ";
+                        }
+                    } else{
+                        mysqli_query($connect, "UPDATE `ageuser` SET `AGEUserStatus`=-1 WHERE `AGEUserName` = '".$_POST['userName']."'") or die(mysqli_connect_error($connect));
+                        echo "
+                            <script>
+                                $(document).ready(() => {
+                                    toast({
+                                        title: 'Thành Công!',
+                                        message: 'Đã vô hiệu tài khoản ".$_POST["userName"].".',
+                                        style: 'success-outline',
+                                        duration: 5000,
+                                        iconType: 'success',
+                                    });
+                                })
+                            </script> 
+                        ";
+                    }
                 } catch (\Throwable $th) {
                     echo "
                         <script>

@@ -141,6 +141,7 @@ function addUserType(data) {
             $('#addUserType')[0].reset();
             listUserType();
             listOptionsUserType("#formAddUser #userType");
+            listOptionsUserType("#formEditUser #userType_");
         },
         'text'
     );
@@ -161,6 +162,7 @@ function processDelType(id, name) {
             hideDialog('.dialog.dialogComfirm');
             listUserType();
             listOptionsUserType("#formAddUser #userType");
+            listOptionsUserType("#formEditUser #userType_");
         },
         'text'
     );
@@ -252,6 +254,7 @@ function addUserPlace(data) {
             $('#addUserPlace')[0].reset();
             listUserPlace();
             listOptionsUserPlace("#formAddUser #userPlace");
+            listOptionsUserPlace("#formEditUser #userPlace_");
         },
         'text'
     );
@@ -272,6 +275,7 @@ function processDelPlace(id, name) {
             hideDialog('.dialog.dialogComfirm');
             listUserPlace();
             listOptionsUserPlace("#formAddUser #userPlace");
+            listOptionsUserPlace("#formEditUser #userPlace_");
         },
         'text'
     );
@@ -349,6 +353,25 @@ function processLockUser(userName) {
     $.post(
         "/process/lockUser.php",
         { userName: userName },
+        function (response) {
+            $('#toast').html(response);
+            hideDialog('.dialog.dialogComfirm');
+            listUsers();
+        },
+        'text'
+    );
+}
+
+function unlockUser(userName) {
+    showConfirm({
+        functionName: "processUnLockUser('" + userName + "')",
+        message: 'Bạn có chắc chắn muốn mở khóa tài khoản "' + userName + '" không?',
+    });
+}
+function processUnLockUser(userName) {
+    $.post(
+        "/process/lockUser.php",
+        { userName: userName, action: "unlock" },
         function (response) {
             $('#toast').html(response);
             hideDialog('.dialog.dialogComfirm');
