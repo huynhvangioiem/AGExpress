@@ -2,7 +2,7 @@
     if(isset($_POST['action'])){ // check is set data
         include_once("connection.php");
         try { // try to query the bol in the database
-            $get = mysqli_query($connect, "SELECT a.*, b.*, c.AGEPlaceName, d.AGEUserName, d.AGEUserFullName FROM ageexport a JOIN ageshipment b ON a.AGEShipment = b.AGEShipmentID JOIN ageplace c ON a.AGEDestination = c.AGEPlaceID JOIN AGEUser d ON a.AGEUser = d.AGEUserName") or die(mysqli_connect_error($connect));
+            $get = mysqli_query($connect, "SELECT a.*, b.*, c.AGEPlaceName, d.AGEUserName, d.AGEUserFullName FROM ageexport a JOIN ageshipment b ON a.AGEShipment = b.AGEShipmentID JOIN ageplace c ON a.AGEDestination = c.AGEPlaceID JOIN ageuser d ON a.AGEUser = d.AGEUserName") or die(mysqli_connect_error($connect));
             $res = "";
             include 'TLABarcode.php';
             while($data=mysqli_fetch_array($get, MYSQLI_ASSOC)){ //browse through each data

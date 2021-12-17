@@ -1,0 +1,4 @@
+<?php
+  $connect = mysqli_connect('localhost','id18094123_tla_age','Age.231199.TLA','id18094123_age')or die("Không thể kết nối csdl".mysqli_connect_error());	
+  date_default_timezone_set("Asia/Ho_Chi_Minh");
+?>
