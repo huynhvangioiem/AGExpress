@@ -71,6 +71,9 @@ document.addEventListener('DOMContentLoaded', function () {
       Validator.isRequired('#end'),
       Validator.isSelected('#from', 'Vui lòng chọn địa điểm xuất phát!'),
       Validator.isSelected('#to', 'Vui lòng chọn địa điểm đến!'),
+      Validator.isDifferent('#to', function () {
+        return $('#formCreateShipment #from').val();
+      }, "Điểm đến không được trùng với điểm xuất phát!")
     ],
     onSubmit: function (data) {
       if (data.shipmentId == "") {
@@ -195,6 +198,25 @@ function play(id) {
 function processPlay(id) {
   $.post(
       "/process/playShipment.php",
+      {id: id},
+      function (response) {
+          $('#toast').html(response);
+          hideDialog('.dialog.dialogComfirm');
+          getShipment();
+      },
+      'text'
+  );
+}
+
+function done(id) {
+  showConfirm({
+    functionName: "processDone('" + id + "')",
+    message: 'Thao tác này không thể khôi phục. Bạn có xác nhận rằng chuyến hàng "' + id + '" đã hoàn thành không?',
+  });
+}
+function processDone(id) {
+  $.post(
+      "/process/doneShipment.php",
       {id: id},
       function (response) {
           $('#toast').html(response);

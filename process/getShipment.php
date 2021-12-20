@@ -6,22 +6,29 @@
             $res = "";
             include 'TLABarcode.php';
             while($data=mysqli_fetch_array($get, MYSQLI_ASSOC)){ //browse through each data
-                $disabled = "";
+                $action = "";
                 switch ($data['AGEShipmentStatus']) { //set status
                     case 0:
                         $status = "Đã lên lịch";
+                        $action = '
+                            <button type="button" class="btn btn-success" onclick="play(\''.$data["AGEShipmentID"].'\')"><i class="far fa-play-circle"></i></button>
+                            <button type="button" class="btn btn-info" onclick="edit(\''.$data["AGEShipmentID"].'\', \''.$data["AGEShipmentDriverName"].'\', \''.$data['AGEShipmentBKS'].'\', '.$data['AGEShipmentFrom'].', '.$data['AGEShipmentTo'].', \''.date_format(date_create($data['AGEShipmentStart']),"Y-m-d\TH:i").'\', \''.date_format(date_create($data['AGEShipmentEnd']),"Y-m-d\TH:i").'\')"><i class="fas fa-edit"></i></button>
+                            <button type="button" class="btn btn-warning" onclick="cancel(\''.$data["AGEShipmentID"].'\')"><i class="far fa-trash-alt"></i></button>
+                        ';
                         break;
                     case 1:
                         $status = "Đang vận chuyển";
-                        $disabled = "disabled";
+                        $action = '
+                            <button type="button" class="btn btn-success" onclick="done(\''.$data["AGEShipmentID"].'\')"><i class="fas fa-check"></i></button>
+                        ';
                         break;
                     case 2:
                         $status = "Hoàn thành";
-                        $disabled = "disabled";
+                        $action = "";
                         break;
                     case -1:
                         $status = "Đã hủy";
-                        $disabled = "disabled";
+                        $action = "";
                         break;
                     
                 };
@@ -35,11 +42,7 @@
                         <td>'.date_format(date_create($data['AGEShipmentStart']),"d/m/Y H:i").'</td>
                         <td>'.date_format(date_create($data['AGEShipmentEnd']),"d/m/Y H:i").'</td>
                         <td>'.$status.'</td>
-                        <td>
-                            <button type="button" class="btn btn-success" '.$disabled.' onclick="play(\''.$data["AGEShipmentID"].'\')"><i class="far fa-play-circle"></i></button>
-                            <button type="button" class="btn btn-info" '.$disabled.' onclick="edit(\''.$data["AGEShipmentID"].'\', \''.$data["AGEShipmentDriverName"].'\', \''.$data['AGEShipmentBKS'].'\', '.$data['AGEShipmentFrom'].', '.$data['AGEShipmentTo'].', \''.date_format(date_create($data['AGEShipmentStart']),"Y-m-d\TH:i").'\', \''.date_format(date_create($data['AGEShipmentEnd']),"Y-m-d\TH:i").'\')"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-warning" '.$disabled.' onclick="cancel(\''.$data["AGEShipmentID"].'\')"><i class="far fa-trash-alt"></i></button>
-                        </td>
+                        <td>'.$action.'</td>
                     </tr>
                 ';
             }
@@ -49,7 +52,7 @@
                     <table id="shipmentListTable" class="stripe" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Mã Đơn</th>
+                                <th>Mã Chuyến</th>
                                 <th>Tên Tài Xế</th>
                                 <th>Số Xe</th>
                                 <th>Lộ Trình</th>

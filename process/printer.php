@@ -48,7 +48,7 @@ if (isset($_POST['action']) && isset($_POST['id'])) { // check is set data
                     <div class="col-4 col-m-4 col-s-4">Hình thức phát:</div>
                     <div class="col-8 col-m-8 col-s-8"><?php echo $data['AGEBoLDeliveryForm'] == 1 ? "Người nhận tự đến lấy" : "Phát đến địa chỉ nhận" ?></div>
                     <div class="col-4 col-m-4 col-s-4">Hướng dẫn phát:</div>
-                    <div class="col-8 col-m-8 col-s-8"><?php echo "Bổ sung hướng dẫn phát" ?></div>
+                    <div class="col-8 col-m-8 col-s-8"><?php echo $data['AGEBoLDeliveryWay'] ?></div>
                     <div class="col-4 col-m-4 col-s-4">Thu hộ:</div>
                     <div class="col-8 col-m-8 col-s-8"><?php echo number_format($data['AGEBoLCollection']) ?> VNĐ</div>
                 </div>
@@ -150,7 +150,7 @@ if (isset($_POST['action']) && isset($_POST['id'])) { // check is set data
                     <div class="col-4 col-m-4 col-s-4">Hình thức phát:</div>
                     <div class="col-8 col-m-8 col-s-8"><?php echo $data['AGEBoLDeliveryForm'] == 1 ? "Người nhận tự đến lấy" : "Phát đến địa chỉ nhận" ?></div>
                     <div class="col-4 col-m-4 col-s-4">Hướng dẫn phát:</div>
-                    <div class="col-8 col-m-8 col-s-8"><?php echo "Bổ sung hướng dẫn phát" ?></div>
+                    <div class="col-8 col-m-8 col-s-8"><?php echo $data['AGEBoLDeliveryWay'] ?></div>
                     <div class="col-4 col-m-4 col-s-4">Thu hộ:</div>
                     <div class="col-8 col-m-8 col-s-8"><?php echo number_format($data['AGEBoLCollection']) ?> VNĐ</div>
                 </div>

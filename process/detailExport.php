@@ -8,7 +8,82 @@ if (isset($_POST['exportID']) && isset($_POST['action'])) {
   if (is_numeric($_POST['exportID']) && $_POST['action'] == 'getBolInExport') {
     getBolInExport($_POST['exportID'], $connect);
   }
+  if (is_numeric($_POST['exportID']) && $_POST['action'] == 'getBolInExportToCheck') {
+    getBolInExportToCheck($_POST['exportID'], $connect);
+  }
 }
+
+function getBolInExportToCheck($id, $connect)
+{
+  try {
+    $getStatusExp = mysqli_query($connect, "SELECT `AGEExportStatus` FROM ageexport WHERE `AGEExportID` = '$id'") or die(mysqli_connect_error($connect));
+    $dataStt = mysqli_fetch_array($getStatusExp, MYSQLI_ASSOC);
+    switch ($dataStt['AGEExportStatus']) { //set status
+      case 1:
+        $action = '
+        <button class="btn btn-success" type="button" onclick="importBol('.$id.')">Nhập Kho</button>
+          <button class="btn btn-warning" type="button" onclick="hideDialog(\'#checkExportDialog\')">Đóng</button>
+        ';
+        break;
+        case 2:
+          $action = '
+          <button class="btn btn-warning" type="button" onclick="hideDialog(\'#checkExportDialog\')">Đóng</button>
+        ';
+        break;
+    };
+    $res = "";
+    $get = mysqli_query($connect, "SELECT b.AGEBoLID, b.AGEBoLDecs, d.AGEPlaceName, b.AGEBoLTransportFee, b.AGEBoLStatus, b.AGEBoLEndPoint, c.AGEPlace FROM ageexportdetail a JOIN agebol b ON a.AGEBoL = b.AGEBoLID JOIN ageuser c ON b.AGEUser = c.AGEUserName JOIN ageplace d ON b.AGEBoLEndPoint = d.AGEPlaceID WHERE a.AGEExport = '$id'") or die(mysqli_connect_error($connect));
+    while ($data = mysqli_fetch_array($get, MYSQLI_ASSOC)) { //browse through each data
+      if ($data['AGEBoLStatus'] == $data['AGEPlace']) $status = "Đã nhập kho gửi";
+      else if ($data['AGEBoLStatus'] == $data['AGEBoLEndPoint']) $status = "Đang phát";
+      else $status = "Đang vận chuyển";
+      $res .= '
+        <tr>
+            <td>' . $data['AGEBoLID'] . '</td>
+            <td>' . $data['AGEBoLDecs'] . '</td>
+            <td>' . $data['AGEPlaceName'] . '</td>
+            <td>' . number_format($data['AGEBoLTransportFee']) . '</td>
+            <td>' . $status . '</td>
+            <td><input class="form-check-input" type="checkbox" disabled id="'.$data['AGEBoLID'].'" name="'.$data['AGEBoLID'].'" value="true"></td>
+        </tr>
+      ';
+    }
+?>
+    <table id="listBolTable" class="stripe" style="width:100%">
+      <thead>
+        <tr>
+          <th>Mã Đơn</th>
+          <th>Mô Tả</th>
+          <th>Địa Điểm Phát</th>
+          <th>Phí Vận Chuyển (VNĐ)</th>
+          <th>Trạng Thái</th>
+          <th>Check</th>
+        </tr>
+      </thead>
+      <tbody><?php echo $res ?></tbody>
+    </table>
+    <!-- Call DataTables -->
+    <script>
+      $(document).ready(function() {
+        $("#listBolTable").DataTable({
+          "language": {
+            "emptyTable": "Không có dữ liệu trong bảng",
+            "info": "Hiển thị _START_ - _END_ / _TOTAL_ đơn hàng",
+            "infoEmpty": "Hiện thị 0 đơn hàng",
+            "infoFiltered": "(Đã lọc từ _MAX_ danh mục)",
+            "lengthMenu": "Hiển thị _MENU_ dòng",
+            "search": "Tìm kiếm:",
+            "zeroRecords": "Không tìm thấy dữ liệu!",
+          },
+          "order": [0, "desc"]
+        });
+      });
+    </script>
+    <div class="row dialogFooter"><?php echo $action; ?></div>
+  <?php
+  } catch (\Throwable $th) {
+  }
+};
 
 function getBolInExport($id, $connect)
 {
@@ -101,7 +176,7 @@ function getBolInExport($id, $connect)
 function getInfo($id, $connect)
 {
   try {
-    $get = mysqli_query($connect, "SELECT a.AGEExportID, a.AGEExportTime, a.AGEShipment, a.AGEExportStatus, b.AGEShipmentDriverName, b.AGEShipmentStart, b.AGEShipmentEnd, c.AGEPlaceName, d.AGEUserFullName, e.AGEPlaceName placeFrom, f.AGEPlaceName placeTo FROM ageexport a JOIN ageshipment b ON a.AGEShipment = b.AGEShipmentID JOIN ageplace c ON a.AGEDestination = c.AGEPlaceID JOIN AGEUser d ON a.AGEUser = d.AGEUserName JOIN ageplace e ON b.AGEShipmentFrom = e.AGEPlaceID JOIN ageplace f ON b.AGEShipmentTo = f.AGEPlaceID WHERE `AGEExportID` = '$id'") or die(mysqli_connect_error($connect));
+    $get = mysqli_query($connect, "SELECT a.AGEExportID, a.AGEExportTime, a.AGEShipment, a.AGEExportStatus, b.AGEShipmentDriverName, b.AGEShipmentStart, b.AGEShipmentEnd, c.AGEPlaceName, d.AGEUserFullName, e.AGEPlaceName placeFrom, f.AGEPlaceName placeTo FROM ageexport a JOIN ageshipment b ON a.AGEShipment = b.AGEShipmentID JOIN ageplace c ON a.AGEDestination = c.AGEPlaceID JOIN ageuser d ON a.AGEUser = d.AGEUserName JOIN ageplace e ON b.AGEShipmentFrom = e.AGEPlaceID JOIN ageplace f ON b.AGEShipmentTo = f.AGEPlaceID WHERE `AGEExportID` = '$id'") or die(mysqli_connect_error($connect));
     $data = mysqli_fetch_array($get, MYSQLI_ASSOC);
     switch ($data['AGEExportStatus']) { //set status
       case -1:

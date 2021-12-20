@@ -192,8 +192,7 @@ function addBolToExport(id) {
 	$("#formAddBolToExport #exportID").val(id);
 	getBolInExport(id);
 	$('#addBolToExportDialog .dialogHeader .title').html("Thêm Đơn Hàng Vào Phiếu Xuất");
-
-
+	$('#addBolToExportDialog .formAdd').show();
 }
 function getExportInfo(id) {
 	$.post(
@@ -216,6 +215,13 @@ function getBolInExport(id) {
 	);
 }
 function exportBol(id) {
+	showConfirm({
+		functionName: "processExport(" + id + ")",
+		message: 'Vui lòng kiểm tra kỹ các thông tin trước khi xuất. Bạn có muốn tiếp tục?',
+	});
+}
+function processExport(id) {
+	hideDialog('.dialog.dialogComfirm');
 	$.post(
 		"/process/exportBol.php",
 		{ exportID: id, action: "exportBol" },

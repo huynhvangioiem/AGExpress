@@ -106,10 +106,11 @@ III. Luồng xử lý:
       x6.3 cancel export
       x6.4 add bol to export 
       x6.5 export
+   7. import
 
 
 IV. GHi chú
-V. Check error: 14/12/2021
+V1. Check error: 14/12/2021
    0. Login and logout and update password: all success
    1. Type: 
       - add: success
@@ -140,7 +141,46 @@ V. Check error: 14/12/2021
    6. Export
       - create: 
 
-V. Check error: 17/12/2021
+V2. Check error: 17/12/2021
    5. Bol:
       - Print newbol: hướng dẫn phát chưa được chỉnh sữa
    6. Export
+   - check export is empty
+
+V3. Check error: 18/12/2021
+   1. Type: 
+      - add: success
+      - edit: success
+      - delete: success
+   2. Place:
+      - add: success
+      - edit: success
+      - delete: success
+   3. User:
+      - add: success
+      - edit: success
+      - delete: success
+      - lock: success
+      - unlock: success
+      - first login: success
+   4. Bol
+      - add: success
+      - edit: success
+      - print: success
+      - print label: comming soon!
+      - Cancel bol: comming soon!
+   5. Shipment
+      - add: success
+      - edit: success
+      - cancel: success
+      - start: success
+      - done: success
+   6. Export
+      - add: bổ sung tính năng nhân viên không thể xuất kho đến địa điểm mình đang làm việc
+      - edit: success
+      - add bol to export: success
+      - del bol on export: success
+      - export bol: success
+      - print: success
+      - cancel: success
+   7. 

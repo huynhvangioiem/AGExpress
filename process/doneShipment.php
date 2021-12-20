@@ -5,7 +5,7 @@
     ){ 
       include_once("connection.php");
       try { //
-        mysqli_query($connect, "UPDATE `ageshipment` SET  `AGEShipmentStatus`= 1, AGEShipmentStart = '".date("Y-m-d H:i")."' WHERE `AGEShipmentID`='".$_POST['id']."'") or die(mysqli_connect_error($connect));
+        mysqli_query($connect, "UPDATE `ageshipment` SET  `AGEShipmentStatus`= 2, AGEShipmentEnd = '".date("Y-m-d H:i")."' WHERE `AGEShipmentID`='".$_POST['id']."'") or die(mysqli_connect_error($connect));
         echo "
           <script>
             $(document).ready(() => {

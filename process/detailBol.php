@@ -1,9 +1,10 @@
 <?php
+session_start();
 if (isset($_POST['bolID'])) { // check is set data input
     include_once("connection.php");
     include("TLABarcode.php");
     try { // try to query bol from database and return the component if success
-        $get = mysqli_query($connect, "SELECT * FROM `agebol` JOIN ageplace ON agebol.`AGEBoLEndPoint` = ageplace.AGEPlaceID JOIN ageuser ON agebol.AGEUser = ageuser.AGEUserName WHERE `AGEBoLID` = '" . $_POST['bolID'] . "'") or die(mysqli_connect_error($connect));
+        $get = mysqli_query($connect, "SELECT a.*, b.AGEPlaceName endPoint, c.AGEUserFullName Creater, c.AGEPlace placeCreated  FROM `agebol` a JOIN ageplace b ON a.AGEBoLEndPoint = b.AGEPlaceID JOIN ageuser c ON a.AGEUser = c.AGEUserName WHERE `AGEBoLID` = '" . $_POST['bolID'] . "'") or die(mysqli_connect_error($connect));
         $data = mysqli_fetch_array($get, MYSQLI_ASSOC);
         $bolID =  createBar128($data['AGEBoLID']);
 ?>
@@ -38,7 +39,7 @@ if (isset($_POST['bolID'])) { // check is set data input
                     <div class="col-4 col-m-4 col-s-4">Địa chỉ:</div>
                     <div class="col-8 col-m-8 col-s-8"><?php echo $data['AGEBoLReceiverAddress']?></div>
                     <div class="col-4 col-m-4 col-s-4">Kho phát:</div>
-                    <div class="col-8 col-m-8 col-s-8"><?php echo $data['AGEPlaceName']?></div>
+                    <div class="col-8 col-m-8 col-s-8"><?php echo $data['endPoint']?></div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-m-12 col-s-12">
@@ -71,11 +72,11 @@ if (isset($_POST['bolID'])) { // check is set data input
                     <div class="col-4 col-m-4 col-s-4">Thu hộ:</div>
                     <div class="col-8 col-m-8 col-s-8"><?php echo number_format($data['AGEBoLCollection'])?> VNĐ</div>
                     <div class="col-4 col-m-4 col-s-4">Nhân viên tạo:</div>
-                    <div class="col-8 col-m-8 col-s-8"><?php echo $data['AGEUserFullName']?></div>
+                    <div class="col-8 col-m-8 col-s-8"><?php echo $data['Creater']?></div>
                     <div class="col-4 col-m-4 col-s-4">Trạng thái:</div>
                     <div class="col-8 col-m-8 col-s-8">
                         <?php 
-                            if($data['AGEBoLStatus']==$data['AGEPlace']) $status = "Đã nhập kho gửi";
+                            if($data['AGEBoLStatus']==$data['placeCreated']) $status = "Đã nhập kho gửi";
                             else if($data['AGEBoLStatus']==$data['AGEBoLEndPoint']) $status = "Đang phát";
                             else $status = "Đang vận chuyển";
                             echo $status;
@@ -85,26 +86,41 @@ if (isset($_POST['bolID'])) { // check is set data input
             </div>
         </div>
         <div class="row dialogFooter">
-            <button class="btn btn-info" type="button" onclick="editBol(
-                '<?php echo $data['AGEBoLID']?>',
-                '<?php echo $data['AGEBoLSenderName']?>',
-                '<?php echo $data['AGEBoLSenderSdt']?>',
-                '<?php echo $data['AGEBoLSenderAddress']?>',
-                '<?php echo $data['AGEBoLReceiverName']?>',
-                '<?php echo $data['AGEBoLReceiverSdt']?>',
-                '<?php echo $data['AGEBoLReceiverAddress']?>',
-                '<?php echo $data['AGEBoLDeliveryForm']?>',
-                '<?php echo $data['AGEBoLTransportFee']?>',
-                '<?php echo $data['AGEBoLCollection']?>',
-                '<?php echo $data['AGEBoLPayer']?>',
-                '<?php echo $data['AGEBoLDecs']?>',
-                '<?php echo $data['AGEBoLWeight']?>',
-                '<?php echo $data['AGEBoLEndPoint']?>',
-                '<?php echo $data['AGEBoLDeliveryWay']?>',
-            )">Chỉnh Sửa</button>
+            <button
+                class="btn btn-info" 
+                <?php 
+                    $getSS = mysqli_query($connect, "SELECT `AGEPlace` FROM `ageuser` WHERE `AGEUserName` = '".$_SESSION['userName']."'") or die(mysqli_connect_error($connect));
+                    $dataSS = mysqli_fetch_array($getSS, MYSQLI_ASSOC);
+                    if($data['placeCreated']!==$dataSS['AGEPlace']) echo "disabled";
+                ?>
+                type="button" onclick="editBol(
+                    '<?php echo $data['AGEBoLID']?>',
+                    '<?php echo $data['AGEBoLSenderName']?>',
+                    '<?php echo $data['AGEBoLSenderSdt']?>',
+                    '<?php echo $data['AGEBoLSenderAddress']?>',
+                    '<?php echo $data['AGEBoLReceiverName']?>',
+                    '<?php echo $data['AGEBoLReceiverSdt']?>',
+                    '<?php echo $data['AGEBoLReceiverAddress']?>',
+                    '<?php echo $data['AGEBoLDeliveryForm']?>',
+                    '<?php echo $data['AGEBoLTransportFee']?>',
+                    '<?php echo $data['AGEBoLCollection']?>',
+                    '<?php echo $data['AGEBoLPayer']?>',
+                    '<?php echo $data['AGEBoLDecs']?>',
+                    '<?php echo $data['AGEBoLWeight']?>',
+                    '<?php echo $data['AGEBoLEndPoint']?>',
+                    '<?php echo $data['AGEBoLDeliveryWay']?>',
+                )"
+            >Chỉnh Sửa</button>
             <button class="btn btn-success" type="button" onclick="printer('<?php echo $data['AGEBoLID']?>', 'bol')">In Phiếu</button>
             <button class="btn btn-success" type="button">In label</button>
-            <button class="btn btn-warning" type="button" onclick="cancel('<?php echo $data['AGEBoLID']?>')">Hủy Đơn</button>
+            <button class="btn btn-warning" type="button"
+                onclick="cancel('<?php echo $data['AGEBoLID']?>')"
+                <?php 
+                    $getSS = mysqli_query($connect, "SELECT `AGEPlace` FROM `ageuser` WHERE `AGEUserName` = '".$_SESSION['userName']."'") or die(mysqli_connect_error($connect));
+                    $dataSS = mysqli_fetch_array($getSS, MYSQLI_ASSOC);
+                    if($data['placeCreated']!==$dataSS['AGEPlace']) echo "disabled";
+                ?>
+            >Hủy Đơn</button>
             <button class="btn btn-danger" type="button" onclick="hideDialog('#detailDialog')">Đóng</button>
         </div>
     </div>

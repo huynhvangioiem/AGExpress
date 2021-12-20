@@ -141,6 +141,14 @@ Validator.isConfirmed = function (selector, confirmValues, message) {
     }
   }
 }
+Validator.isDifferent = function (selector, confirmValues, message) {
+  return {
+    selector: selector,
+    test: function (value) {
+      return value !== confirmValues() ? undefined : message || 'Giá trị nhập vào không chính xác';
+    }
+  }
+}
 
 Validator.isSelected = function (selector, message) {
   return {
