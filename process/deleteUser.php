@@ -1,71 +1,48 @@
 <?php
-if(isset($_POST['userName'])){ // check is set data
-    if(is_string($_POST['userName'])&& $_POST['userName']!=''){ //check input value
-        include_once("connection.php");
-        try { //try to find userTypeName
-            $get = mysqli_query($connect, "SELECT ageusertype.AGEUserTypeName FROM ageuser JOIN ageusertype ON ageusertype.AGEUserTypeID = ageuser.AGEUserType  WHERE ageuser.AGEUserName = '".$_POST['userName']."'") or die(mysqli_connect_error($connect));
-            $data=mysqli_fetch_array($get, MYSQLI_ASSOC);
-            if($data['AGEUserTypeName']!=="Admin"){ //if userTypeName is not Admin
-                try { //try to delete UserType and aler if success
-                    mysqli_query($connect, "DELETE FROM `ageuser` WHERE `ageuser`.`AGEUserName` = '".$_POST["userName"]."'") or die(mysqli_connect_error($connect));
-                    echo "
-                        <script>
-                            $(document).ready(() => {
-                                toast({
-                                    title: 'Thành Công!',
-                                    message: 'Đã xóa tài khoản ".$_POST["userName"].".',
-                                    style: 'success-outline',
-                                    duration: 5000,
-                                    iconType: 'success',
-                                });
-                            })
-                        </script> 
-                    ";
-                } catch (\Throwable $th) { //if delete is wrong, aler error message
-                    echo "
-                        <script>
-                            $(document).ready(() => {
-                                toast({
-                                    title: 'Thất Bại!',
-                                    message: 'Không thể xóa tài khoản này!',
-                                    style: 'danger-outline',
-                                    duration: 5000,
-                                    iconType: 'danger',
-                                });
-                            })
-                        </script> 
-                    ";
-                }
-            }else{ //else, if userTypeName is Admin, aler error message
-                echo "
-                    <script>
-                        $(document).ready(() => {
-                            toast({
-                                title: 'Thất Bại!',
-                                message: 'Không thể xóa tài khoản này!',
-                                style: 'danger-outline',
-                                duration: 5000,
-                                iconType: 'danger',
-                            });
-                        })
-                    </script> 
-                ";
-            }
-        } catch (\Throwable $th) { //if the process find is wrong aler error message
-            echo "
-                <script>
-                    $(document).ready(() => {
-                        toast({
-                            title: 'Thất Bại!',
-                            message: 'Không thể xóa tài khoản này!',
-                            style: 'danger-outline',
-                            duration: 5000,
-                            iconType: 'danger',
-                        });
-                    })
-                </script> 
-            ";
-        }
+/*
+* version 1.0
+* Last Update: 20/12/21
+* Status: 200 OK
+*/
+session_start();
+if( !isset($_SESSION['userName'])
+    || !isset($_POST['userName'])
+    || !is_string($_POST['userName'])
+    || $_POST['userName']==''
+) echo '<script>window.location ="/";</script>';
+else{
+    include_once("connection.php");
+    $sqlPermiss = mysqli_prepare($connect, "DELETE FROM ageuserpermiss WHERE `AGEUser` != ( SELECT a.AGEUserName FROM ageuser a JOIN ageusertype b ON a.AGEUserType = b.AGEUserTypeID WHERE b.AGEUserTypeName = 'Admin' ) AND `AGEUser` = '".$_POST['userName']."'");
+    $sqlQuery   = mysqli_prepare($connect, "DELETE FROM `ageuser` WHERE `ageuser`.`AGEUserName` = '".$_POST["userName"]."'");
+    if(mysqli_stmt_execute($sqlPermiss) && mysqli_stmt_execute($sqlQuery)){
+        echo "
+            <script>
+                $(document).ready(() => {
+                    toast({
+                        title: 'Thành Công!',
+                        message: 'Đã xóa tài khoản ".$_POST["userName"].".',
+                        style: 'success-outline',
+                        duration: 5000,
+                        iconType: 'success',
+                    });
+                })
+            </script> 
+        ";
+    }else{
+        echo "
+            <script>
+                $(document).ready(() => {
+                    toast({
+                        title: 'Thất Bại!',
+                        message: 'Không thể xóa tài khoản này!',
+                        style: 'danger-outline',
+                        duration: 5000,
+                        iconType: 'danger',
+                    });
+                })
+            </script> 
+        ";
     }
 }
+
 ?>

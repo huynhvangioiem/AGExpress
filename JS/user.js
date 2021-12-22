@@ -1,16 +1,14 @@
-// 1. check login
-window.onload = function () {
+$(document).ready(function () {
+    // check login 
     $.get("process/checkLogin.php", function (response) {
         if (response != "true") window.location = "/login.html";
         else $("body").show();
     });
-}
-//get data to profile
-$(document).ready(function () {
     $.post(
         "/process/getOrther.php",
         { funcName: "getSession" },
         function (response) {
+            //get data to profile
             $.post(
                 "/process/getProfile.php",
                 { userName: response },
@@ -19,6 +17,8 @@ $(document).ready(function () {
                 },
                 'text'
             );
+            //decentralization
+            decentralization(response);
         },
         'text'
     );
@@ -387,6 +387,22 @@ function editUser(userName, fullName, type, place) {
     $('#formEditUser #fullName_').val(fullName);
     listOptionsUserType("#formEditUser #userType_", type);
     listOptionsUserPlace("#formEditUser #userPlace_", place);
+    getPermissions(userName);
+}
+function getPermissions(userName) {
+    $.post(
+        "/process/getOrther.php",
+        { funcName: "getPermissions", userName: userName },
+        function (response) {
+            var permiss = JSON.parse(response);
+            $.each(permiss, function (key, value) {
+                //check values when edit user
+                if (value == 1) $('#formEditUser #' + key + "_").prop('checked', true);
+            })
+
+        },
+        'text'
+    );
 }
 function updateUser(data) {
     $.post(
@@ -402,6 +418,19 @@ function updateUser(data) {
             $('#toast').html(response);
             hideDialog('#editUserDialog');
             listUsers();
+        },
+        'text'
+    );
+}
+function decentralization(userName) {
+    $.post(
+        "/process/getOrther.php",
+        { funcName: "getPermissions", userName: userName },
+        function (response) {
+            var permiss = JSON.parse(response);
+            if(permiss['permiss1'] == 0){
+                $("#action").html("");
+            }
         },
         'text'
     );

@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		],
 		onSubmit: function (data) {
 			$("#"+data.bolID).prop('checked', true);
+			$('#formCheckBol')[0].reset();
 		}
 	});
 
@@ -65,7 +66,7 @@ function getImportList() {
 }
 function checkExport(id) {
 	showDialog('#checkExportDialog');
-	$('#checkExportDialog .dialogHeader .title').html("Kiểm Tra Phiếu Xuất");
+	$('#checkExportDialog .dialogHeader .title').html("Thông Tin Phiếu Xuất");
 	getExportInfo(id);
 	getBolInExport(id);
 }
@@ -102,6 +103,7 @@ function processImport(exportID) {
 		function (response) {
 			$("#toast").html(response);
 			hideDialog('.dialog.dialogComfirm');
+			hideDialog('#checkExportDialog');
 			getImportList();
 		},
 		'text'

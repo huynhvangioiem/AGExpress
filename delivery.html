@@ -16,17 +16,16 @@
 
 	<link rel="stylesheet" href="CSS/styles.css"> <!-- Styles -->
 	<link rel="stylesheet" href="CSS/style.css"> <!-- Style -->
-	<link rel="stylesheet" href="CSS/import.css"> <!-- import Style -->
 
 	<script defer src="JS/dialog.js"></script><!--  Dialog -->
 	<script defer src="JS/formValidator.js"></script> <!-- form Validator -->
 	<script defer src="JS/toast.js"></script>
 
-	<script defer src="JS/import.js"></script>
+	<script defer src="JS/delivery.js"></script> 
 
 
 </head>
-
+<!-- sao chép từ export và chỉ chỉnh sữa các thông tin khác export còn lại giống -->
 <body hidden>
 	<div class="container-fluid">
 		<!-- Banner -->
@@ -73,7 +72,12 @@
 						Bộ lọc
 					</div>
 					<div class="col-9 col-m-8 col-s-12 mainContent">
-						<div class="row importList"></div>
+						<div class="row">
+							<div class="col-6 col-m-6 col-s-12 col-o-6 col-m-o-6 action" id="action">
+								<button class="btn btn-success" id="createDelivery" type="button"><i class="fas fa-plus"></i>Tạo Danh Sách Phát</button>
+							</div>
+						</div>
+						<div class="row deliveryList"></div>
 					</div>
 				</div>
 			</div>
@@ -96,7 +100,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="dialog" id="checkExportDialog">
+	<div class="dialog" id="addBolDialog">
 		<div class="container">
 			<div class="row dialogHeader">
 				<div class="col-12 col-m-12 col-s-12">
@@ -106,35 +110,29 @@
 			<div class="row dialogContent">
 				<div class="col-12 col-m-12 col-s-12" id="info"></div>
 				<div class="col-12 col-m-12 col-s-12 formAdd">
-					<form method="post" class="formCheckBol" id="formCheckBol" action="">
+					<form method="post" class="formAddBol" id="formAddBol" action="">
 						<div class="row">
 							<div class="col-12 col-m-12 col-s-12">
 								<div class="form-group">
-									<input id="bolID" class="form-control" type="text" name="bolID"
-										placeholder="Nhập mã đơn cần kiểm tra và nhấn Enter để check">
+									<input id="bolID" class="form-control" type="text" name="bolID" placeholder="Nhập mã đơn cần thêm và nhấn Enter để thêm">
 									<div class="form-message"></div>
+								</div>
+								<div class="form-group" hidden>
+									<input id="deliveryID" class="form-control" type="text" name="deliveryID">
+									<button class="btn btn-success" id="btnSubmit" type="submit">Thêm</button>
 								</div>
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="col-12 col-m-12 col-s-12 title">
-					<h3>DANH SÁCH ĐƠN HÀNG CẦN KIỂM TRA</h3>
+					<h3>DANH SÁCH ĐƠN HÀNG CẦN XUẤT</h3>
 				</div>
 				<div class="col-12 col-m-12 col-s-12" id="listBol"></div>
-			</div>
-			<div class="row" id="sign">
-				<div class="col-6 col-m-6 col-s-6">......./..../..../....</div>
-				<div class="col-6 col-m-6 col-s-6">......./..../..../....</div>
-				<div class="col-6 col-m-6 col-s-6">Xác Nhận Của ........</div>
-				<div class="col-6 col-m-6 col-s-6">Nhân Viên Xuất</div>
-				<div class="col-6 col-m-6 col-s-6">Ký tên, đóng dấu</div>
-				<div class="col-6 col-m-6 col-s-6">Ký tên, đóng dấu</div>
 			</div>
 		</div>
 	</div>
 	<div class="dialog dialogComfirm"></div>
-
 	<!-- Toast Msg -->
 	<div id="toast"></div>
 </body>

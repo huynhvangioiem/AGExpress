@@ -14,8 +14,10 @@ $(document).ready(function () {
         { action: action, id: id },
         function (response) {
             $(".container").html(response);
-            window.print();
-            window.close();
+            setTimeout(() => {
+                window.print();
+                window.close();
+            }, 500);
         },
         'text'
     );

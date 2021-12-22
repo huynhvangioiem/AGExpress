@@ -16,6 +16,8 @@
       $getPlace = mysqli_query($connect, "SELECT b.AGEPlace FROM `ageexport` a JOIN ageuser b ON a.AGEUser = b.AGEUserName WHERE `AGEExportID` = '".$_POST['exportID']."'") or die(mysqli_connect_error($connect));
       $dataPlace = mysqli_fetch_array($getPlace, MYSQLI_ASSOC);
       mysqli_query($connect, "UPDATE `agebol` SET `AGEBoLStatus` = '".$dataPlace['AGEPlace']."' WHERE `agebol`.`AGEBoLID` = '".$_POST['bolID']."'") or die(mysqli_connect_error($connect));
+      $sqlHistory = mysqli_prepare($connect, "DELETE FROM `agehistory` WHERE `AGEBol` = '".$_POST['bolID']."' AND `AGEHistoryStatus` = '".$_POST['exportID']."'");
+      mysqli_stmt_execute($sqlHistory);
       toastMsg("Đã xóa đơn hành khỏi phiếu xuất!",$error);
     } catch (\Throwable $th) {
       $error = true;

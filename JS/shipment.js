@@ -1,10 +1,32 @@
-// 1. check login
-window.onload = function () {
+//get data
+$(document).ready(function () {
+  //check login
   $.get("process/checkLogin.php", function (response) {
     if (response != "true") window.location = "/login.html";
     else $("body").show();
   });
-}
+  //profile
+  $.post(
+    "/process/getOrther.php",
+    { funcName: "getSession" },
+    function (response) {
+
+      $.post(
+        "/process/getProfile.php",
+        { userName: response },
+        function (response) {
+          $(".profile").html(response);
+        },
+        'text'
+      );
+      //
+      decentralization(response);
+    },
+    'text'
+  );
+  //shipment list
+  getShipment();
+})
 //logOut
 function logout() {
   $.get(
@@ -15,27 +37,6 @@ function logout() {
     'text'
   );
 }
-//get data
-$(document).ready(function () {
-  //profile
-  $.post(
-    "/process/getOrther.php",
-    { funcName: "getSession" },
-    function (response) {
-      $.post(
-        "/process/getProfile.php",
-        { userName: response },
-        function (response) {
-          $(".profile").html(response);
-        },
-        'text'
-      );
-    },
-    'text'
-  );
-  //shipment list
-  getShipment();
-})
 // 2. show add User Dialog
 $('#createShipment').click(function () {
   showDialog('#createShipmentDialog');
@@ -222,6 +223,20 @@ function processDone(id) {
           $('#toast').html(response);
           hideDialog('.dialog.dialogComfirm');
           getShipment();
+      },
+      'text'
+  );
+}
+
+function decentralization(userName) {
+  $.post(
+      "/process/getOrther.php",
+      { funcName: "getPermissions", userName: userName },
+      function (response) {
+          var permiss = JSON.parse(response);
+          if(permiss['permiss5'] == 0){
+              $("#action").html("");
+          }
       },
       'text'
   );

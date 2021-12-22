@@ -1,5 +1,6 @@
 <?php
-if (isset($_POST['exportID']) && isset($_POST['action'])) {
+session_start();
+if (isset($_POST['exportID']) && isset($_POST['action']) && isset($_SESSION['userName'])) {
   include_once("connection.php");
   include 'TLABarcode.php';
   if (is_numeric($_POST['exportID']) && $_POST['action'] == 'getExportInfo') {
@@ -11,6 +12,8 @@ if (isset($_POST['exportID']) && isset($_POST['action'])) {
   if (is_numeric($_POST['exportID']) && $_POST['action'] == 'getBolInExportToCheck') {
     getBolInExportToCheck($_POST['exportID'], $connect);
   }
+}else{
+  echo '<script>window.location ="/";</script>';
 }
 
 function getBolInExportToCheck($id, $connect)
@@ -88,29 +91,26 @@ function getBolInExportToCheck($id, $connect)
 function getBolInExport($id, $connect)
 {
   try {
-    $getStatusExp = mysqli_query($connect, "SELECT `AGEExportStatus` FROM ageexport WHERE `AGEExportID` = '$id'") or die(mysqli_connect_error($connect));
+    $getStatusExp = mysqli_query($connect, "SELECT `AGEExportStatus`, `AGEUser` FROM ageexport WHERE `AGEExportID` = '$id'") or die(mysqli_connect_error($connect));
     $dataStt = mysqli_fetch_array($getStatusExp, MYSQLI_ASSOC);
+    //set action for footer
     switch ($dataStt['AGEExportStatus']) { //set status
       case -1:
-        $disabled = "disabled";
         $action = '<button class="btn btn-warning" type="button" onclick="hideDialog(\'#addBolToExportDialog\')">Đóng</button>';
         break;
       case 1:
-        $disabled = "disabled";
         $action = '
             <button class="btn btn-info" type="button" onclick="printExport()">In Phiếu Xuất</button>
             <button class="btn btn-warning" type="button" onclick="hideDialog(\'#addBolToExportDialog\')">Đóng</button>
           ';
         break;
       case 2:
-        $disabled = "disabled";
         $action = '
             <button class="btn btn-info" type="button" onclick="printExport()">In Phiếu Xuất</button>
             <button class="btn btn-warning" type="button" onclick="hideDialog(\'#addBolToExportDialog\')">Đóng</button>
           ';
         break;
       case 0:
-        $disabled = "";
         $action = '
             <button class="btn btn-success" type="button" onclick="exportBol(' . $_POST['exportID'] . ')">Xuất Kho</button>
             <button class="btn btn-danger" type="button" onclick="cancel(' . $_POST['exportID'] . ')">Hủy Xuất</button>
@@ -118,21 +118,31 @@ function getBolInExport($id, $connect)
           ';
         break;
     };
+    //if the user not who create
+    if($dataStt['AGEUser']!=$_SESSION['userName']){
+      $action = '<button class="btn btn-warning" type="button" onclick="hideDialog(\'#addBolToExportDialog\')">Đóng</button>';
+    }
+    //
     $res = "";
     $get = mysqli_query($connect, "SELECT b.AGEBoLID, b.AGEBoLDecs, d.AGEPlaceName, b.AGEBoLTransportFee, b.AGEBoLStatus, b.AGEBoLEndPoint, c.AGEPlace FROM ageexportdetail a JOIN agebol b ON a.AGEBoL = b.AGEBoLID JOIN ageuser c ON b.AGEUser = c.AGEUserName JOIN ageplace d ON b.AGEBoLEndPoint = d.AGEPlaceID WHERE a.AGEExport = '$id'") or die(mysqli_connect_error($connect));
     while ($data = mysqli_fetch_array($get, MYSQLI_ASSOC)) { //browse through each data
+      //set status for bol
       if ($data['AGEBoLStatus'] == $data['AGEPlace']) $status = "Đã nhập kho gửi";
       else if ($data['AGEBoLStatus'] == $data['AGEBoLEndPoint']) $status = "Đang phát";
       else $status = "Đang vận chuyển";
-      $bolID =  createBar128($data['AGEBoLID']); // call create barcode
       $res .= '
         <tr>
-            <td>' . $bolID . '</td>
-            <td>' . $data['AGEBoLDecs'] . '</td>
-            <td>' . $data['AGEPlaceName'] . '</td>
-            <td>' . number_format($data['AGEBoLTransportFee']) . '</td>
-            <td>' . $status . '</td>
-            <td><button type="button" '.$disabled.' class="btn btn-warning" onclick="del(' . $data["AGEBoLID"] . ',' . $id . ')"><i class="far fa-trash-alt"></i></button></td>
+          <td>' . $data['AGEBoLID'] . '</td>
+          <td>' . $data['AGEBoLDecs'] . '</td>
+          <td>' . $data['AGEPlaceName'] . '</td>
+          <td>' . number_format($data['AGEBoLTransportFee']) . '</td>
+          <td>' . $status . '</td>';
+      if($dataStt['AGEUser']==$_SESSION['userName'] && $dataStt['AGEExportStatus']==0)
+      $res.='
+          <td>
+            <button type="button" class="btn btn-warning" onclick="del(' . $data["AGEBoLID"] . ',' . $id . ')"><i class="far fa-trash-alt"></i></button>
+          </td>';
+      $res.='
         </tr>
       ';
     }
@@ -145,7 +155,7 @@ function getBolInExport($id, $connect)
           <th>Địa Điểm Phát</th>
           <th>Phí Vận Chuyển (VNĐ)</th>
           <th>Trạng Thái</th>
-          <th>Tùy Chọn</th>
+          <?php if($dataStt['AGEUser']==$_SESSION['userName'] && $dataStt['AGEExportStatus']==0) echo '<th>Tùy Chọn</th>' ?>
         </tr>
       </thead>
       <tbody><?php echo $res ?></tbody>
@@ -176,7 +186,7 @@ function getBolInExport($id, $connect)
 function getInfo($id, $connect)
 {
   try {
-    $get = mysqli_query($connect, "SELECT a.AGEExportID, a.AGEExportTime, a.AGEShipment, a.AGEExportStatus, b.AGEShipmentDriverName, b.AGEShipmentStart, b.AGEShipmentEnd, c.AGEPlaceName, d.AGEUserFullName, e.AGEPlaceName placeFrom, f.AGEPlaceName placeTo FROM ageexport a JOIN ageshipment b ON a.AGEShipment = b.AGEShipmentID JOIN ageplace c ON a.AGEDestination = c.AGEPlaceID JOIN ageuser d ON a.AGEUser = d.AGEUserName JOIN ageplace e ON b.AGEShipmentFrom = e.AGEPlaceID JOIN ageplace f ON b.AGEShipmentTo = f.AGEPlaceID WHERE `AGEExportID` = '$id'") or die(mysqli_connect_error($connect));
+    $get = mysqli_query($connect, "SELECT a.AGEExportID, a.AGEExportTime, a.AGEShipment, a.AGEExportStatus, b.AGEShipmentDriverName, b.AGEShipmentStart, b.AGEShipmentEnd, c.AGEPlaceName, d.AGEUserFullName, g.AGEPlaceName placeExport, e.AGEPlaceName placeFrom, f.AGEPlaceName placeTo FROM ageexport a JOIN ageshipment b ON a.AGEShipment = b.AGEShipmentID JOIN ageplace c ON a.AGEDestination = c.AGEPlaceID JOIN ageuser d ON a.AGEUser = d.AGEUserName JOIN ageplace e ON b.AGEShipmentFrom = e.AGEPlaceID JOIN ageplace f ON b.AGEShipmentTo = f.AGEPlaceID JOIN ageplace g ON d.AGEPlace = g.AGEPlaceID WHERE `AGEExportID` = '$id'") or die(mysqli_connect_error($connect));
     $data = mysqli_fetch_array($get, MYSQLI_ASSOC);
     switch ($data['AGEExportStatus']) { //set status
       case -1:
@@ -201,8 +211,8 @@ function getInfo($id, $connect)
           <div class="col-8 col-m-8 col-s-7"><?php echo $status ?></div>
           <div class="col-4 col-m-4 col-s-5">Nhân viên xuất: </div>
           <div class="col-8 col-m-8 col-s-7"><?php echo $data['AGEUserFullName'] ?></div>
-          <div class="col-4 col-m-4 col-s-5">Xuất đến: </div>
-          <div class="col-8 col-m-8 col-s-7"><?php echo $data['AGEPlaceName'] ?></div>
+          <div class="col-4 col-m-4 col-s-5">Kho Xuất - Kho Nhận: </div>
+          <div class="col-8 col-m-8 col-s-7"><?php echo $data['placeExport']." - ".$data['AGEPlaceName'] ?></div>
           <div class="col-4 col-m-4 col-s-5">Thời gian xuất: </div>
           <div class="col-8 col-m-8 col-s-7"><?php echo date_format(date_create($data['AGEExportTime']), "d/m/Y H:i") ?></div>
         </div>

@@ -1,22 +1,10 @@
-// check login
-window.onload = function () {
+//get data
+$(document).ready(function () {
+	//check login
 	$.get("process/checkLogin.php", function (response) {
 		if (response != "true") window.location = "/login.html";
 		else $("body").show();
 	});
-}
-//logOut
-function logout() {
-	$.get(
-		"/process/logout.php",
-		function (response) {
-			window.location = "/";
-		},
-		'text'
-	);
-}
-//get data
-$(document).ready(function () {
 	//profile
 	$.post(
 		"/process/getOrther.php",
@@ -30,13 +18,24 @@ $(document).ready(function () {
 				},
 				'text'
 			);
+			//
+			decentralization(response);
 		},
 		'text'
 	);
 	//get exportList
 	getExportList();
 })
-
+//logOut
+function logout() {
+	$.get(
+		"/process/logout.php",
+		function (response) {
+			window.location = "/";
+		},
+		'text'
+	);
+}
 // 2. show add Dialog
 $('#createExport').click(function () {
 	showDialog('#createExportDialog');
@@ -266,4 +265,17 @@ function processDel(bolID, exportID) {
 
 function printExport() {
 	window.print();
+}
+function decentralization(userName) {
+	$.post(
+		"/process/getOrther.php",
+		{ funcName: "getPermissions", userName: userName },
+		function (response) {
+			var permiss = JSON.parse(response);
+			if (permiss['permiss3'] == 0) {
+				$("#action").html("");
+			}
+		},
+		'text'
+	);
 }

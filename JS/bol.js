@@ -1,27 +1,15 @@
-// 1. check login
-window.onload = function () {
+$(document).ready(function () {
+	//check login
 	$.get("process/checkLogin.php", function (response) {
 		if (response != "true") window.location = "/login.html";
 		else $("body").show();
 	});
-}
-//logOut
-function logout() {
-	$.get(
-		"/process/logout.php",
-		function (response) {
-			window.location = "/";
-		},
-		'text'
-	);
-}
-//get data
-$(document).ready(function () {
 	//profile
 	$.post(
 		"/process/getOrther.php",
 		{ funcName: "getSession" },
 		function (response) {
+			//
 			$.post(
 				"/process/getProfile.php",
 				{ userName: response },
@@ -30,6 +18,7 @@ $(document).ready(function () {
 				},
 				'text'
 			);
+			decentralization(response);
 		},
 		'text'
 	);
@@ -151,7 +140,16 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 });
-
+//logOut
+function logout() {
+	$.get(
+		"/process/logout.php",
+		function (response) {
+			window.location = "/";
+		},
+		'text'
+	);
+}
 // getbollist
 function getBol() {
 	$.post(
@@ -194,4 +192,17 @@ function editBol(bolID, senderName_, senderTel_, senderAddress_, receiverName_, 
 	$("#formEditBol #transportFee_").val(transportFee_);
 	if(payer_ == 1) $("#formEditBol #payer_").prop('checked', true);
 	if(deliveryForm_ == 1) $("#formEditBol #deliveryForm_").prop('checked', true);
+}
+function decentralization(userName) {
+	$.post(
+			"/process/getOrther.php",
+			{ funcName: "getPermissions", userName: userName },
+			function (response) {
+					var permiss = JSON.parse(response);
+					if(permiss['permiss2'] == 0){
+							$("#action").html("");
+					}
+			},
+			'text'
+	);
 }

@@ -42,6 +42,8 @@
     try {
       mysqli_query($connect, "INSERT INTO `ageexportdetail`(`AGEExport`, `AGEBoL`) VALUES ('".$_POST['exportID']."','".$_POST['bolID']."')") or die(mysqli_connect_error($connect));
       mysqli_query($connect, "UPDATE `agebol` SET `AGEBoLStatus` = '".$_POST['exportID']."' WHERE `agebol`.`AGEBoLID` = '".$_POST['bolID']."'") or die(mysqli_connect_error($connect));
+		  $sqlHistory = mysqli_prepare($connect, "INSERT INTO `agehistory`( `AGEBol`, `AGEHistoryTime`, `AGEHistoryStatus`) VALUES ('".$_POST['bolID']."','".date('Y-m-d H:i')."',".$_POST['exportID'].")");
+      mysqli_stmt_execute($sqlHistory);
       toastMsg("Đã thêm thành công!",$error);
     } catch (\Throwable $th) {
       $error = true;
