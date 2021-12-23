@@ -39,6 +39,7 @@ function getBolInExportToCheck($id, $connect)
     while ($data = mysqli_fetch_array($get, MYSQLI_ASSOC)) { //browse through each data
       if ($data['AGEBoLStatus'] == $data['AGEPlace']) $status = "Đã nhập kho gửi";
       else if ($data['AGEBoLStatus'] == $data['AGEBoLEndPoint']) $status = "Đang phát";
+      else if($data['AGEBoLStatus']==200) $status = "Phát thành công";
       else $status = "Đang vận chuyển";
       $res .= '
         <tr>
@@ -129,6 +130,7 @@ function getBolInExport($id, $connect)
       //set status for bol
       if ($data['AGEBoLStatus'] == $data['AGEPlace']) $status = "Đã nhập kho gửi";
       else if ($data['AGEBoLStatus'] == $data['AGEBoLEndPoint']) $status = "Đang phát";
+      else if($data['AGEBoLStatus']==200) $status = "Phát thành công";
       else $status = "Đang vận chuyển";
       $res .= '
         <tr>

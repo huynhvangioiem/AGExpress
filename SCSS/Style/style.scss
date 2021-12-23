@@ -12,12 +12,14 @@ body {
         margin-top: 15px;
         margin-bottom: 15px;
         .leftContent{
-            min-height: calc(100vh - 255px);
         }
         .mainContent{
+            min-height: calc(100vh - 255px);
+            > .row{
+                margin-bottom: 15px;
+            }
             .action{
                 text-align: right;
-                margin-bottom: 15px;
                 .btn {
                     i {
                         margin-right: 5px;

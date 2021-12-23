@@ -73,7 +73,8 @@ function getBol($connect){
       break;
     case 1:
       $action = '
-        <button class="btn btn-success" type="button" onclick="printDelivery()">In Danh Sách</button>
+        <button class="btn btn-info" type="button" onclick="printDelivery()">In Danh Sách</button>
+        <button class="btn btn-success" type="button" onclick="finish('.$_POST['deliveryID'].')">Đã Phát Hết</button>
         <button class="btn btn-warning" type="button" onclick="hideDialog(\'#addBolDialog\')">Đóng</button>
       ';
       break;
@@ -100,6 +101,11 @@ function getBol($connect){
         $actionBol = "";
         break;
     }
+    $status = "Đang phát";
+    if($data['AGEBoLStatus'] == 200){
+      $status = "Phát thành công!";
+      $actionBol = "";
+    }
     if($dataStt['AGEUser']!=$_SESSION['userName']) $actionBol = "";
     $res.='
       <tr>
@@ -108,7 +114,7 @@ function getBol($connect){
         <td>'.$data['AGEBoLReceiverName'].'</td>
         <td>'.$data['AGEBoLReceiverSdt'].'</td>
         <td>'.$data['AGEBoLReceiverAddress'].'</td>
-        <td>Đang phát</td>
+        <td>'.$status.'</td>
         <td>'.$actionBol.'</td>
       </tr>
     ';
@@ -141,7 +147,8 @@ function getBol($connect){
             "search": "Tìm kiếm:",
             "zeroRecords": "Không tìm thấy dữ liệu!",
           },
-          "order": [0, "desc"]
+          "order": [0, "desc"],
+          responsive: true
         });
       });
     </script>

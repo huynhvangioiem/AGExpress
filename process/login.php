@@ -7,7 +7,7 @@ if ( isset($_POST['userName']) && isset($_POST['password']) ) {
     
         include_once("connection.php");
 
-        $resultLogin = mysqli_query($connect, "SELECT * FROM ageuser WHERE ageuser.AGEUserName = '$userName' AND ageuser.AGEUserPassword = '$password'") or die(mysqli_connect_error($connect));
+        $resultLogin = mysqli_query($connect, "SELECT * FROM ageuser WHERE ageuser.AGEUserName = '$userName' AND ageuser.AGEUserPassword = '$password' AND AGEUserStatus != -1") or die(mysqli_connect_error($connect));
         if (mysqli_num_rows($resultLogin) == 1) {
             echo "
                 <script>

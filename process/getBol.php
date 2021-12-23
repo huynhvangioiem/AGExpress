@@ -19,6 +19,7 @@
             //set status
             if($data['AGEBoLStatus']==$data['placeCreate']) $status = "Đã nhập kho gửi";
             else if($data['AGEBoLStatus']==$data['AGEBoLEndPoint']) $status = "Đang phát";
+            else if($data['AGEBoLStatus']==200) $status = "Phát thành công";
             else $status = "Đang vận chuyển";
             $res .= '
                 <tr>

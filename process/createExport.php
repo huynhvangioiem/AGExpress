@@ -1,17 +1,25 @@
 <?php
 	session_start();
-  if( isset($_POST['timeExport']) && isset($_POST['shipment']) && isset($_POST['destination'])){ //check isset data
-    if( //check input value
-      is_string($_POST['timeExport'])&& $_POST['timeExport']!='' && 
-      is_numeric($_POST['shipment'])&& $_POST['shipment']!='' && 
-      is_numeric($_POST['destination'])&& $_POST['destination']!=''
-    ){
-      try { // try to create a export and aler if success
-        include_once("connection.php");
-			  $IDExport = setID($connect);
-        mysqli_query($connect, "INSERT INTO `ageexport`(`AGEExportID`, `AGEExportTime`, `AGEShipment`, `AGEDestination`, `AGEUser`, `AGEExportStatus`) 
-				VALUES ('".$IDExport."','".$_POST['timeExport']."','".$_POST['shipment']."','".$_POST['destination']."','".$_SESSION['userName']."',0)") or die(mysqli_error($connect));
-        echo "
+	if(
+		!isset($_SESSION['userName']) 
+		|| !isset($_POST['timeExport']) 
+		|| !isset($_POST['shipment']) 
+		|| !isset($_POST['destination']) 
+
+		|| !is_string($_POST['timeExport'])
+		|| !is_numeric($_POST['shipment'])
+		|| !is_numeric($_POST['destination'])
+	) echo '<script>window.location ="/";</script>';
+	else{
+		include_once("connection.php");
+		$IDExport = setID($connect);
+		$get = mysqli_query($connect, "SELECT * FROM `ageuser` WHERE `AGEUserName` = '".$_SESSION['userName']."'");
+		$data = mysqli_fetch_array($get, MYSQLI_ASSOC);
+		if($data['AGEPlace']!=$_POST['destination']){
+			$sqlQuery = mysqli_prepare($connect, "INSERT INTO `ageexport`(`AGEExportID`, `AGEExportTime`, `AGEShipment`, `AGEDestination`, `AGEUser`, `AGEExportStatus`) 
+			VALUES ('".$IDExport."','".$_POST['timeExport']."','".$_POST['shipment']."','".$_POST['destination']."','".$_SESSION['userName']."',0)");
+			if(mysqli_stmt_execute($sqlQuery)){
+				echo "
 					<script>
 						$(document).ready(() => {
 							toast({
@@ -24,8 +32,8 @@
 						})
 					</script> 
 				";
-      } catch (\Throwable $th) { //if wrong, aler error message
-        echo "
+			}else{
+				echo "
 					<script>
 						$(document).ready(() => {
 							toast({
@@ -38,9 +46,23 @@
 						})
 					</script> 
 				"; 
-      }
-    }
-  }
+			}
+		}else{
+			echo "
+					<script>
+						$(document).ready(() => {
+							toast({
+								title: 'Thất Bại!',
+								message: 'Nơi nhận trùng với nơi bạn đang làm việc.',
+								style: 'danger-outline',
+								duration: 5000,
+								iconType: 'danger',
+							});
+						})
+					</script> 
+				"; 
+		}
+	}
   //function setID 
 	function setID($connect){
 		$get = mysqli_query($connect, "SELECT COUNT(*) as STT FROM `ageexport` WHERE `AGEExportID` LIKE '".date("d").date("m").date("y")."%'") or die(mysqli_connect_error($connect));

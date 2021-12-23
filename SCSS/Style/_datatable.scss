@@ -9,6 +9,7 @@
 }
 .dataTable {
     //All selector of tables
+    overflow-x: auto;
     box-shadow: 1px 1px 1px 1px #ccc;
     th {
         background-color: #dcf4fc;

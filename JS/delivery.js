@@ -90,6 +90,7 @@ function addBol(deliveryID) {
 	$("#addBolDialog .dialogHeader .title").html("THÔNG TIN DANH SÁCH PHÁT");
 	getInfo(deliveryID);
 	$("#formAddBol #deliveryID").val(deliveryID);
+	$('#addBolDialog .formAdd').show();
 	getBol(deliveryID);
 }
 function getInfo(id) {
@@ -208,6 +209,26 @@ function processFinishBol(deliveryID,bolID) {
 			$("#toast").html(response);
 			hideDialog('.dialog.dialogComfirm');
 			getBol(deliveryID);
+		},
+		'text'
+	);
+}
+
+function finish(deliveryID) {
+	showConfirm({
+		functionName: "processFinish("+deliveryID+")",
+		message: 'Bạn xác nhận rằng đã phát thành công danh sách này? Chỉ hoàn tất danh sách khi đã xác nhận tất cả các đơn hàng được giao thành công. Tiếp tục?',
+	});
+}
+function processFinish(deliveryID) {
+	$.post(
+		"/process/finishDelivery.php",
+		{ deliveryID: deliveryID},
+		function (response) {
+			$("#toast").html(response);
+			hideDialog('.dialog.dialogComfirm');
+			hideDialog('#addBolDialog');
+			getDeliveryList();
 		},
 		'text'
 	);

@@ -4,8 +4,10 @@
   else{
     include_once("connection.php");
     $get = mysqli_query($connect, "SELECT * FROM `agebol` WHERE `AGEBoLID` = '".$_POST['bolID']."'");
+    $getUser = mysqli_query($connect, "SELECT * FROM `ageuser` WHERE `AGEUserName` = '".$_SESSION['userName']."'");
+    $dataUser = mysqli_fetch_array($getUser, MYSQLI_ASSOC);
     $data = mysqli_fetch_array($get, MYSQLI_ASSOC);
-    if(mysqli_num_rows($get)==1 && $data['AGEBoLStatus']==$data['AGEBoLEndPoint']){
+    if(mysqli_num_rows($get)==1 && $data['AGEBoLStatus']==$data['AGEBoLEndPoint'] && $dataUser['AGEPlace']==$data['AGEBoLStatus'] ){
       $sqlQuery = mysqli_prepare($connect, "INSERT INTO `agedeliverydetail`(`AGEDelivery`, `AGEBol`) VALUES ('".$_POST['deliveryID']."','".$_POST['bolID']."')");
       if(mysqli_stmt_execute($sqlQuery)){
         echo "

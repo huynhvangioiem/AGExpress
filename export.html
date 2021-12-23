@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="CSS/style.css"> <!-- Style -->
 	<link rel="stylesheet" href="CSS/export.css"><!--  export Style -->
 
+	<script defer src="JS/TLA.js"></script> <!-- Script-->
 	<script defer src="JS/dialog.js"></script><!--  Dialog -->
 	<script defer src="JS/formValidator.js"></script> <!-- form Validator -->
 	<script defer src="JS/toast.js"></script>
@@ -55,6 +56,7 @@
 						<ul class="navbar-nav navbar-left">
 							<li class="nav-item"><a class="nav-link" href="/">Tổng Quan</a></li>
 							<li class="nav-item"><a class="nav-link" href="/bol.html">Vận Đơn</a></li>
+							<li class="nav-item"><a class="nav-link" href="/delivery.html">Giao Hàng</a></li>
 							<li class="nav-item"><a class="nav-link" href="/export.html">Xuất Kho</a></li>
 							<li class="nav-item"><a class="nav-link" href="/import.html">Nhập Kho</a></li>
 							<li class="nav-item"><a class="nav-link" href="/shipment.html">Chuyến Hàng</a></li>
@@ -69,12 +71,11 @@
 		<div class="row main">
 			<div class="container">
 				<div class="row">
-					<div class="col-3 col-m-4 col-s-0 leftContent">
-						Bộ lọc
-					</div>
-					<div class="col-9 col-m-8 col-s-12 mainContent">
-						<div class="row">
-							<div class="col-6 col-m-6 col-s-12 col-o-6 col-m-o-6 action" id="action">
+					<!-- <div class="col-3 col-m-4 col-s-0 leftContent"></div> -->
+					<div class="col-12 col-m-12 col-s-12 mainContent">
+            <div class="row">
+              <div class="col-6 col-m-6 col-s-12 namePage"><h2>QUẢN LÝ XUẤT KHO</h2></div>
+              <div class="col-6 col-m-6 col-s-12 action" id="action">
 								<button class="btn btn-success" id="createExport" type="button"><i class="fas fa-plus"></i>Tạo phiếu
 									xuất</button>
 							</div>
@@ -86,21 +87,21 @@
 		</div>
 		<!-- Footer -->
 		<div class="row footer">
-			<div class="container">
-				<div class="row footerContent">
-					<div class="col-3 col-m-3 col-s-12">
-						<h3>Copyright © 2022 AGEXPRESS</h3>
-					</div>
-					<div class="col-6 col-m-6 col-s-12">
-						<h3>Công Ty TNHH AGEXPRESS</h3>
-						<h4>Số 94, Triệu Thị Trinh, Phường Bình Khánh, Long Xuyên, An Giang</h4>
-					</div>
-					<div class="col-3 col-m-3 col-s-12">
-						<h3><a href="https://huynhvangioiem.github.io/TLA_Library/">Develop by TLAIT</a></h3>
-					</div>
-				</div>
-			</div>
-		</div>
+      <div class="container">
+        <div class="row footerContent">
+          <div class="col-3 col-m-3 col-s-12">
+            <h3>Copyright © 2022 AGEXPRESS</h3>
+          </div>
+          <div class="col-6 col-m-6 col-s-12">
+            <h3>Công Ty TNHH AGEXPRESS</h3>
+            <h4>Số 94, Triệu Thị Trinh, Phường Bình Khánh, Long Xuyên, An Giang</h4>
+          </div>
+          <div class="col-3 col-m-3 col-s-12">
+            <h3><a target="_blank" href="https://huynhvangioiem.github.io/TLA_Library/">Develop  by TLAIT</a></h3>
+          </div>
+        </div>
+      </div>
+    </div>
 	</div>
 
 	<div class="dialog" id="createExportDialog">

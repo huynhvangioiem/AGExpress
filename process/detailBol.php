@@ -122,6 +122,7 @@ if (!isset($_POST['action'])) {
                                 <?php
                                 if ($data['AGEBoLStatus'] == $data['placeCreated']) $status = "Đã nhập kho gửi";
                                 else if ($data['AGEBoLStatus'] == $data['AGEBoLEndPoint']) $status = "Đang phát";
+                                else if($data['AGEBoLStatus']==200) $status = "Phát thành công";
                                 else $status = "Đang vận chuyển";
                                 echo $status;
                                 ?>
@@ -166,7 +167,8 @@ if (!isset($_POST['action'])) {
                 if ($dataHistory['AGEHistoryStatus'] == $dataHistory['placeSend']) $historyBol .= '<div class="col-12 col-m-12 col-s-12"> * ' . date_format(date_create($dataHistory['AGEHistoryTime']), "d/m/Y H:i") . ': Chấp nhận gửi tại ' . $dataHistory['placeSendName'] . '</div>';
                 if ($dataHistory['AGEHistoryStatus'] == $dataHistory['placeReceiver']) $historyBol .= '<div class="col-12 col-m-12 col-s-12"> * ' . date_format(date_create($dataHistory['AGEHistoryTime']), "d/m/Y H:i") . ': Đã đến kho phát ' . $dataHistory['placeReceiverName'] . '</div>';
                 if ($dataHistory['exporter'] != "") $historyBol .= '<div class="col-12 col-m-12 col-s-12"> * ' . date_format(date_create($dataHistory['AGEHistoryTime']), "d/m/Y H:i") . ': Đang vận chuyển từ ' . $dataHistory['placeExpName'] . ' đến ' . $dataHistory['placeDestiName'] . '</div>';
-                if ($dataHistory['AGEHistoryStatus'] != $dataHistory['placeSend'] && $dataHistory['AGEHistoryStatus'] != $dataHistory['placeReceiver'] && $dataHistory['exporter'] == "")
+                if($dataHistory['AGEHistoryStatus']==200) $historyBol .= '<div class="col-12 col-m-12 col-s-12"> * ' . date_format(date_create($dataHistory['AGEHistoryTime']), "d/m/Y H:i") . ': Đã phát thành công</div>';
+                else if ($dataHistory['AGEHistoryStatus'] != $dataHistory['placeSend'] && $dataHistory['AGEHistoryStatus'] != $dataHistory['placeReceiver'] && $dataHistory['exporter'] == "")
                     $historyBol .= '<div class="col-12 col-m-12 col-s-12"> * ' . date_format(date_create($dataHistory['AGEHistoryTime']), "d/m/Y H:i") . ': Đã đến kho ' . $dataHistory['placeOrther'] . '</div>';
             }
         ?>

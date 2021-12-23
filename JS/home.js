@@ -17,6 +17,7 @@ $(document).ready(function () {
                         },
                         'text'
                     );
+                    decentralization(response);
                 },
                 'text'
             );
@@ -33,3 +34,16 @@ function logout() {
         'text'
     );
 }
+function decentralization(userName) {
+    $.post(
+        "/process/getOrther.php",
+        { funcName: "getPermissions", userName: userName },
+        function (response) {
+            var permiss = JSON.parse(response);
+            if(permiss['permiss1'] == 1){ window.location="/user.html"}
+            if(permiss['permiss4'] == 1){ window.location="/shipment.html"}
+            if(permiss['permiss2'] == 1){ window.location="/bol.html"}
+        },
+        'text'
+    );
+  }
